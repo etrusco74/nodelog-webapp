@@ -1,0 +1,71 @@
+html,
+body {
+    height: 100%;
+    /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    /* Negative indent footer by it's height */
+    margin: 0 auto -60px;
+}
+
+/* Set the fixed height of the footer here */
+#push,
+#footer {
+    height: 60px;
+}
+#footer {
+    border-top: 1px solid #e5e5e5;
+    padding: 10px 0;
+    background-color: #f5f5f5;
+}
+#footer p {
+    margin-bottom: 0;
+    color: #777;
+}
+#footer-links {
+    margin: 10px 0;
+}
+#footer-links li {
+    display: inline;
+    padding: 0 2px;
+}
+#footer-links li:first-child {
+    padding-left: 0;
+}
+
+.imageUploaded {
+    width: 60px;
+    min-height: 60px;
+    max-height: auto;
+    float: left;
+    margin: 3px;
+    padding: 3px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/** custom header style **/
+h1.lead { border-bottom: 1px dotted #ccc; margin-bottom: 20px; }
+h2.lead { border-bottom: 1px dotted #ccc; margin-bottom: 20px; }
+h3.lead { border-bottom: 1px dotted #ccc; margin-bottom: 20px; }
+h4.lead { border-bottom: 1px dotted #ccc; margin-bottom: 20px; }
+h5.lead { border-bottom: 1px dotted #ccc; margin-bottom: 20px; }
+h6.lead { margin-bottom: 20px; }
+
+/** navbar **/
+.navbar {
+    position: relative;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-bottom: 20px;
+    background-color: #eeeeee;
+    /**border-radius: 4px;**/
+}

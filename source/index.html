@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="nodelog" />
+    <meta name="description" content="nodelog, realtime analytics" />
+    <meta name="author" content="Alessandro De Marchi - ademarchi74@gmail.com" />
+
+    <!-- css ext -->
+    <link rel="stylesheet"      href="css/ext/bootstrap.3.1.1.min.css" media="screen">
+    <link rel="stylesheet"      href="css/ext/dropzone.css" media="screen">
+    <link rel="stylesheet"      href="css/ext/responsiveslides.css" media="screen">
+
+    <!-- css app -->
+    <link rel="stylesheet" href="css/app/style.css" type="text/css"  />
+
+    <title>nodelog - realtime analytics</title>
+
+</head>
+
+<body>
+
+    <noscript>
+        <img src='css/img/logo.png' width='600'/><br>
+        &nbsp;&nbsp;I'm sorry, nodelog require <b>javascript enabled</b>
+    </noscript>
+
+    <!-- page content -->
+    <div id="wrap">
+
+        <!-- navbar -->
+        <div id="navbar_content"></div>
+
+        <!-- content -->
+        <div id="content"></div>
+
+        <!-- push content -->
+        <div id="push"></div>
+
+    </div>
+
+    <!-- footer -->
+    <div id="footer_content"></div>
+
+    <!-- all javascript library
+    ================================================== -->
+    <!-- js ext library -->
+    <script type="text/javascript" src="js/lib/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="js/lib/underscore-1.4.4.min.js"></script>
+    <script type="text/javascript" src="js/lib/backbone-1.0.0.min.js"></script>
+    <script type="text/javascript" src="js/lib/backbone.localStorage.min.js"></script>
+    <script type="text/javascript" src="js/lib/bootstrap.3.0.0.min.js"></script>
+    <script type="text/javascript" src="js/lib/oauth.js"></script>
+    <script type="text/javascript" src="js/lib/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="js/lib/md5.js"></script>
+    <script type="text/javascript" src="js/lib/jquery.gravatar.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
+    <script type="text/javascript" src="js/lib/jquery.geocomplete.min.js"></script>
+    <script type="text/javascript" src="js/lib/infobubble.js"></script>
+    <script type="text/javascript" src="js/lib/animatescroll.js"></script>
+    <script type="text/javascript" src="js/lib/moment-langs.min.js"></script>
+    <script type="text/javascript" src="js/lib/bootbox.min.js"></script>
+    <script type="text/javascript" src="js/lib/dropzone.min.js"></script>
+    <script type="text/javascript" src="js/lib/responsiveslides.min.js"></script>
+    <!-- app -->
+    <script type="text/javascript" src="js/app.js"></script>
+    <!-- router -->
+    <script type="text/javascript" src="js/routers/app.routers.router.js"></script>
+    <!-- model -->
+    <script type="text/javascript" src="js/models/app.models.language.js"></script>
+    <script type="text/javascript" src="js/models/app.models.token.js"></script>
+    <script type="text/javascript" src="js/models/app.models.user.js"></script>
+    <script type="text/javascript" src="js/models/app.models.type.js"></script>
+    <script type="text/javascript" src="js/models/app.models.report.js"></script>
+    <script type="text/javascript" src="js/models/app.models.image.js"></script>
+    <!-- collection -->
+    <script type="text/javascript" src="js/collections/app.collections.languages.js"></script>
+    <script type="text/javascript" src="js/collections/app.collections.tokens.js"></script>
+    <script type="text/javascript" src="js/collections/app.collections.users.js"></script>
+    <script type="text/javascript" src="js/collections/app.collections.types.js"></script>
+    <script type="text/javascript" src="js/collections/app.collections.reports.js"></script>
+    <script type="text/javascript" src="js/collections/app.collections.images.js"></script>
+    <!-- view -->
+    <script type="text/javascript" src="js/views/app.views.index.js"></script>
+    <script type="text/javascript" src="js/views/app.views.login.js"></script>
+    <script type="text/javascript" src="js/views/app.views.registration.js"></script>
+    <script type="text/javascript" src="js/views/app.views.dashboard.js"></script>
+    <script type="text/javascript" src="js/views/app.views.profile.js"></script>
+    <script type="text/javascript" src="js/views/app.views.report.js"></script>
+    <script type="text/javascript" src="js/views/app.views.navbar.js"></script>
+    <script type="text/javascript" src="js/views/app.views.sidebar.js"></script>
+    <script type="text/javascript" src="js/views/app.views.footer.js"></script>
+    <script type="text/javascript" src="js/views/app.views.credits.js"></script>
+    <script type="text/javascript" src="js/views/app.views.project.js"></script>
+    <script type="text/javascript" src="js/views/app.views.password.js"></script>
+    <script type="text/javascript" src="js/views/app.views.resend.js"></script>
+    <script type="text/javascript" src="js/views/app.views.activate.js"></script>
+    <script type="text/javascript" src="js/views/app.views.error.js"></script>
+    <script type="text/javascript" src="js/views/app.views.adlarge.js"></script>
+    <script type="text/javascript" src="js/views/app.views.admedium.js"></script>
+    <script type="text/javascript" src="js/views/app.views.adsmall.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            if (checkBrowser()) {
+                if (checkCookie()) {
+                    app.utils.init(true);       /** www startup **/
+                }
+                else    {
+                    $("#content").append("<img src='css/img/logo.png' width='600'/>");
+                    alert("I'm sorry, nodelog requires cookies enabled.")
+                }
+            }
+            else    {
+                $("#content").append("<img src='css/img/logo.png' width='600'/>");
+                alert("I'm sorry, nodelog is not compliant with your IE version. Upgrade it or use another browser like Firefox, Chrome or Safari.")
+            }
+
+            //check for browser compatibility
+            function checkBrowser() {
+                var ver = -1; // Return value assumes failure.
+                var ret = true;
+                if (navigator.appName == 'Microsoft Internet Explorer')
+                {
+                    var ua = navigator.userAgent;
+                    var re  = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+                    if (re.exec(ua) != null)
+                        ver = parseFloat( RegExp.$1 );
+                }
+                if ( ver > -1 )     {
+                    if ( ver < 8.0 )
+                        ret = false;
+                }
+                return ret;
+            }
+
+            //check for cookie enabled
+            function checkCookie()  {
+                var cookieEnabled=(navigator.cookieEnabled)? true : false
+                if (typeof navigator.cookieEnabled=="undefined" && !cookieEnabled){
+                    document.cookie="testcookie";
+                    cookieEnabled=(document.cookie.indexOf("testcookie")!=-1)? true : false;
+                }
+                return (cookieEnabled) ? true : false;
+            }
+
+        });
+    </script>
+
+</body>
+</html>
