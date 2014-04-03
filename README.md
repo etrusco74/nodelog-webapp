@@ -2,4 +2,5 @@ nodelog-webapp
 ===============
 
 nodelog webapp gui
-realtime analytics
+
+realtime web analytics
