@@ -18,10 +18,7 @@ app.routers.router = Backbone.Router.extend({
         ':lang/dashboard':          'dashboard',
         ':lang/report':             'report',
         ':lang/report/type_id/:type_id':      'report',
-        ':lang/mapdashboard':       'mapdashboard',
-        ':lang/mapdashboard/id/:id':       'mapdashboard_single',
         ':lang/credits':            'credits',
-        ':lang/help':               'help',
         ':lang/project':            'project',
         ':lang/resend':                     'resend',
         ':lang/activate/:id/:apikey':       'activate',
@@ -213,89 +210,6 @@ app.routers.router = Backbone.Router.extend({
         }
     },
     /** public function **/
-    mapdashboard: function() {
-        /** load data from localstorage service **/
-        app.utils.loadTokens();
-        var lang = app.utils.getLanguage();
-
-        /** render navbar view **/
-        app.global.navbarView = new app.views.navbar();
-        app.global.navbarView.render();
-        $('#navbar_content').html(app.global.navbarView.el);
-        /** render mapdashboard view **/
-        app.global.mapdashboardView = new app.views.mapdashboard();
-        app.global.mapdashboardView.render();
-        $('#content').html(app.global.mapdashboardView.el);
-        /** render map sidebar view **/
-        app.global.mapsidebarView = new app.views.mapsidebar();
-        app.global.mapsidebarView.render();
-        $('#map_sidebar_content').html(app.global.mapsidebarView.el);
-        /** render ad view **/
-        var windowWidth = $(window).width();
-        if (windowWidth >= 800) {
-            app.global.adlargeView = new app.views.adlarge();
-            app.global.adlargeView.render();
-            $('#ad_content').html(app.global.adlargeView.el);
-        } else if (windowWidth < 500) {
-            app.global.adsmallView = new app.views.adsmall();
-            app.global.adsmallView.render();
-            $('#ad_content').html(app.global.adsmallView.el);
-        } else {
-            app.global.admediumView = new app.views.admedium();
-            app.global.admediumView.render();
-            $('#ad_content').html(app.global.admediumView.el);
-        }
-        /** render footer view **/
-        app.global.footerView = new app.views.footer();
-        app.global.footerView.render();
-        $('#footer_content').html(app.global.footerView.el);
-
-        /** set css - bugfix bootstrap and google maps **/
-        app.global.mapdashboardView.init_map();
-        app.global.mapsidebarView.init_geo();
-
-        this.navigate('#!' + lang + '/mapdashboard', { trigger : false });
-    },
-    /** public function **/
-    mapdashboard_single: function(lang, id) {
-        /** load data from localstorage service **/
-        app.utils.loadTokens();
-        var lang = app.utils.getLanguage();
-
-        /** render navbar view **/
-        app.global.navbarView = new app.views.navbar();
-        app.global.navbarView.render();
-        $('#navbar_content').html(app.global.navbarView.el);
-        /** render mapdashboardsingle view **/
-        app.global.mapdashboardsingleView = new app.views.mapdashboardsingle();
-        app.global.mapdashboardsingleView.render();
-        $('#content').html(app.global.mapdashboardsingleView.el);
-        /** render ad view **/
-        var windowWidth = $(window).width();
-        if (windowWidth >= 800) {
-            app.global.adlargeView = new app.views.adlarge();
-            app.global.adlargeView.render();
-            $('#ad_content').html(app.global.adlargeView.el);
-        } else if (windowWidth < 500) {
-            app.global.adsmallView = new app.views.adsmall();
-            app.global.adsmallView.render();
-            $('#ad_content').html(app.global.adsmallView.el);
-        } else {
-            app.global.admediumView = new app.views.admedium();
-            app.global.admediumView.render();
-            $('#ad_content').html(app.global.admediumView.el);
-        }
-        /** render footer view **/
-        app.global.footerView = new app.views.footer();
-        app.global.footerView.render();
-        $('#footer_content').html(app.global.footerView.el);
-
-        /** set css - bugfix bootstrap and google maps **/
-        app.global.mapdashboardsingleView.init_map(id);
-
-        this.navigate('#!' + lang + '/mapdashboard/id/' + id, { trigger : false });
-    },
-    /** public function **/
     credits: function() {
         /** load data from localstorage service **/
         app.utils.loadTokens();
@@ -315,28 +229,6 @@ app.routers.router = Backbone.Router.extend({
         $('#footer_content').html(app.global.footerView.el);
 
         this.navigate('#!' + lang + '/credits', { trigger : false });
-
-    },
-    /** public function **/
-    help: function() {
-        /** load data from localstorage service **/
-        app.utils.loadTokens();
-        var lang = app.utils.getLanguage();
-
-        /** render navbar view **/
-        app.global.navbarView = new app.views.navbar();
-        app.global.navbarView.render();
-        $('#navbar_content').html(app.global.navbarView.el);
-        /** render help view **/
-        app.global.helpView = new app.views.help();
-        app.global.helpView.render();
-        $('#content').html(app.global.helpView.el);
-        /** render footer view **/
-        app.global.footerView = new app.views.footer();
-        app.global.footerView.render();
-        $('#footer_content').html(app.global.footerView.el);
-
-        this.navigate('#!' + lang + '/help', { trigger : false });
 
     },
     /** public function **/
