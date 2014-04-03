@@ -108,11 +108,7 @@ app = {
                 if (app.global.footerView) { app.global.footerView.destroy_view();  }
                 if (app.global.loginView) { app.global.loginView.destroy_view(); }
                 if (app.global.registrationView) { app.global.registrationView.destroy_view(); }
-                if (app.global.mapdashboardView) { app.global.mapdashboardView.destroy_view(); }
-                if (app.global.mapdashboardsingleView) { app.global.mapdashboardsingleView.destroy_view(); }
-                if (app.global.mapsidebarView) { app.global.mapsidebarView.destroy_view(); }
                 if (app.global.creditsView) { app.global.creditsView.destroy_view(); }
-                if (app.global.helpView) { app.global.helpView.destroy_view(); }
                 if (app.global.projectView) { app.global.projectView.destroy_view(); }
                 if (app.global.activateView) { app.global.activateView.destroy_view(); }
                 if (app.global.resendView) { app.global.resendView.destroy_view(); }
