@@ -1,9 +1,9 @@
 {
-    "type": "report",
+    "type": "site",
     "lang" : "it",
     "form_messages" : {
-        "geocomplete_report": "Campo obbligatorio",
-        "reportTypes": "Campo obbligatorio",
+        "geocomplete_site": "Campo obbligatorio",
+        "siteTypes": "Campo obbligatorio",
         "description": "Campo obbligatorio",
         "contact_email":{
             "email": "Inserisci una email valida"
@@ -13,7 +13,7 @@
         }
     },
     "tag_desc" : "descrivi bene la tua segnalazione nel campo <b>note</b> così da generare dei <b>tag</b> e rendere la tua segnalazione facilmente <b>rintracciabile</b>",
-    "no_report_desc" : "non hai inserito ancora nessuna segnalazione",
+    "no_site_desc" : "non hai inserito ancora nessuna segnalazione",
 
     "header_confirm_ins_message" : "Confermi di voler inserire la seguente segnalazione?",
     "body_confirm_ins_message" : "Confermi di voler inserire la seguente segnalazione?",

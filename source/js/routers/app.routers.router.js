@@ -16,8 +16,7 @@ app.routers.router = Backbone.Router.extend({
         ':lang/profile':            'profile',
         ':lang/password':           'password',
         ':lang/dashboard':          'dashboard',
-        ':lang/report':             'report',
-        ':lang/report/type_id/:type_id':      'report',
+        ':lang/site':               'site',
         ':lang/credits':            'credits',
         ':lang/project':            'project',
         ':lang/resend':                     'resend',
@@ -175,13 +174,11 @@ app.routers.router = Backbone.Router.extend({
         }
     },
     /** private function **/
-    report: function(lng, type_id) {
+    site: function() {
         /** load data from localstorage service **/
         app.utils.loadTokens();
         var lang = app.utils.getLanguage();
-        if (typeof type_id === 'undefined') {
-            type_id = 0;
-        }
+
         if (app.global.tokensCollection.length == 0) {
             this.index();
         }
@@ -190,23 +187,20 @@ app.routers.router = Backbone.Router.extend({
             app.global.navbarView = new app.views.navbar();
             app.global.navbarView.render();
             $('#navbar_content').html(app.global.navbarView.el);
-            /** render report view **/
-            app.global.reportView = new app.views.report();
-            app.global.reportView.render(type_id);
-            $('#content').html(app.global.reportView.el);
+            /** render site view **/
+            app.global.siteView = new app.views.site();
+            app.global.siteView.render();
+            $('#content').html(app.global.siteView.el);
             /** render sidebar view **/
             app.global.sidebarView = new app.views.sidebar();
-            app.global.sidebarView.render('report');
+            app.global.sidebarView.render('site');
             $('#sidebar_content').html(app.global.sidebarView.el);
             /** render footer view **/
             app.global.footerView = new app.views.footer();
             app.global.footerView.render();
             $('#footer_content').html(app.global.footerView.el);
 
-            /** set css - bugfix bootstrap and google maps**/
-            app.global.reportView.init_map();
-
-            this.navigate('#!' + lang + '/report', { trigger : false });
+            this.navigate('#!' + lang + '/site', { trigger : false });
         }
     },
     /** public function **/

@@ -11,8 +11,8 @@ app = {
         utils: {
 
             init: function (startup) {
-                app.utils.loadTemplate(['index', 'login', 'registration', 'profile', 'dashboard', 'footer', 'navbar', 'sidebar', 'report', 'credits', 'project', 'password', 'resend', 'activate', 'error', 'adlarge', 'admedium', 'adsmall'], function() {
-                    app.utils.loadLanguage(['index', 'login', 'registration', 'profile', 'dashboard', 'footer', 'navbar', 'sidebar', 'report', 'credits', 'project', 'password', 'resend', 'activate', 'error'], function() {
+                app.utils.loadTemplate(     ['index', 'login', 'registration', 'profile', 'dashboard', 'footer', 'navbar', 'sidebar', 'site', 'credits', 'project', 'password', 'resend', 'activate', 'error', 'adlarge', 'admedium', 'adsmall'], function() {
+                    app.utils.loadLanguage( ['index', 'login', 'registration', 'profile', 'dashboard', 'footer', 'navbar', 'sidebar', 'site', 'credits', 'project', 'password', 'resend', 'activate', 'error'], function() {
                         if (startup) {
                             app.router = new app.routers.router();
                             try {Backbone.history.start();} catch(ex) { ; }
@@ -117,27 +117,27 @@ app = {
                 if (app.global.dashboardView) { app.global.dashboardView.destroy_view(); }
                 if (app.global.sidebarView) { app.global.sidebarView.destroy_view(); }
                 if (app.global.profileView) { app.global.profileView.destroy_view();  }
-                if (app.global.reportView) { app.global.reportView.destroy_view();  }
+                if (app.global.siteView) { app.global.siteView.destroy_view();  }
                 if (app.global.passwordView) { app.global.passwordView.destroy_view();  }
             }
         },
 
         /** app config **/
         const: {
-            //env : 'development',
+            env : 'development',
             //env : 'test',
-            env : 'production',
+            //env : 'production',
             weburl : function() {
                 var url;
                 switch(this.env) {
                     case'development':
-                        url = 'http://darkroomlocator-server-c9-etrusco.c9.io/'
+                        url = 'http://nodelog-c9-etrusco.c9.io/';
                         break;
                     case 'test':
-                        url = 'http://darkroomlocator-test.herokuapp.com/'
+                        url = 'http://nodelogapp.herokuapp.com/';
                         break;
                     default:
-                        url = 'http://www.darkroomlocator.com/'
+                        url = 'http://nodelogapp.herokuapp.com/';
                 }
                 return url;
             },
@@ -149,14 +149,6 @@ app = {
 
         /** app global var **/
         global: {
-            /** public map - mapdashboard **/
-            map : null,
-            markers_array : [],
-            init_zoom: 6,
-            type_value : '1',
-            lat_txt : 0,
-            lng_txt : 0,
-            slider: null,
             default_language : function(){
                 var lang = window.navigator.userLanguage || window.navigator.language;
                 lang = lang.substring(0,2);

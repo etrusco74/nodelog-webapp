@@ -1,10 +1,10 @@
-<!-- Report -->
+<!-- Site -->
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
             <ol class="breadcrumb">
                 <li><a href="#">home</a></li>
-                <li class="active">report</li>
+                <li class="active">site</li>
             </ol>
         </div>
     </div>
@@ -16,17 +16,17 @@
 
         <div class="col-lg-11">
             <!--Body content-->
-            <h3 class="lead">Manage your <span id='redcolor'>reports</span></h3>
+            <h3 class="lead">Manage your <span id='redcolor'>sites</span></h3>
 
             <div class="row">
 
                 <div class="col-lg-3">
 
-                    <h5>your reports</h5>
-                    <ul class="nav bs-sidenav" id="reportList">
+                    <h5>your sites</h5>
+                    <ul class="nav bs-sidenav" id="siteList">
                     </ul>
                     <br>
-                    <button type="button" id="newReportButton" class="btn btn-warning btn-block">new reports</button><br>
+                    <button type="button" id="newSiteButton" class="btn btn-warning btn-block">new sites</button><br>
                     <button type="button" id="shareFbButton" class="btn btn-primary btn-block">share on facebook</button><br>
                     <button type="button" id="shareTwitterButton" class="btn btn-info btn-block">share on twitter</button><br>
                     <button type="button" id="sharePermaButton" class="btn btn-default btn-block">permalink</button><br>
@@ -44,13 +44,13 @@
                         Pssss ... remember you can manually <b>move</b> the icon to make a <b>finest</b> selection of the location on the map.
                     </div>
 
-                    <form id="reportForm" method="post">
+                    <form id="siteForm" method="post">
 
-                        <div id='reportfield'>
+                        <div id='sitefield'>
                             <input type='text' name='_id' id='_id' placeholder="id" class="form-control" readonly /><br/>
-                            <input name="geocomplete_report" id="geocomplete_report" type="text" placeholder="Insert an address" value="" size="50" class="form-control" /><br/>
-                            <select name="reportTypes" id="reportTypes" class="form-control">
-                                <option> -- report type -- </option>
+                            <input name="geocomplete_site" id="geocomplete_site" type="text" placeholder="Insert an address" value="" size="50" class="form-control" /><br/>
+                            <select name="siteTypes" id="siteTypes" class="form-control">
+                                <option> -- site type -- </option>
                             </select><br/>
                             <input type="text" name="description" id="description" value="" placeholder="Description" class="form-control"/><br/>
                             <textarea name="note" id="note" rows="3" placeholder="Note" class="form-control"></textarea><br/>
@@ -95,8 +95,8 @@
                         </div>
 
                         <div id='buttonfield'>
-                            <button type="submit" id="reportButton" class="btn btn-success btn-block">save</button><br>
-                            <button type="button" id="deleteReportButton" class="btn btn-danger btn-block">delete</button>
+                            <button type="submit" id="siteButton" class="btn btn-success btn-block">save</button><br>
+                            <button type="button" id="deleteSiteButton" class="btn btn-danger btn-block">delete</button>
                         </div>
                         <br>
 
@@ -143,7 +143,7 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <div id="map_canvas_report" class="map_canvas_report"></div>
+                    <div id="map_canvas_site" class="map_canvas_site"></div>
                 </div>
 
             </div>

@@ -1,0 +1,67 @@
+<!-- Site -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-1">
+            <!--Sidebar content-->
+            <div id="sidebar_content"></div>
+        </div>
+
+        <div class="col-lg-11">
+            <!--Body content-->
+            <h3 class="lead">Gestisci i tuoi <span id='redcolor'>website</span></h3>
+
+            <div class="row">
+
+                <div class="col-lg-2 col-lg-offset-1">
+
+                    <h5>i tuoi website</h5>
+                    <ul class="nav bs-sidenav" id="siteList">
+                    </ul>
+                    <br>
+                    <button type="button" id="newSiteButton" class="btn btn-warning">nuovo website</button><br>
+
+                </div>
+
+                <div class="col-lg-4">
+
+                    <form id="siteForm" method="post">
+
+                        <div id='sitefield'>
+                            <input type='text' name='_id' id='_id' placeholder="id" class="form-control" readonly /><br/>
+                            <input type="text" name="website" id="website" placeholder="sito web" value="" class="form-control" /><br/>
+                        </div>
+
+                        <div id='buttonfield'>
+                            <button type="submit" id="siteButton" class="btn btn-success">salva</button>
+                            <button type="button" id="deleteSiteButton" class="btn btn-danger">cancella</button>
+                        </div>
+                        <br>
+
+                    </form>
+
+                    <!-- Modal perma -->
+                    <div class="modal fade" id="myModalPerma">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title"><span id="titlePerma"></span></h3>
+                                </div>
+                                <div class="modal-body">
+                                    <span id="bodyPerma"></span>
+                                    <br><br>
+                                    <textarea class="form-control" id="linkPerma" rows="1" onclick="this.select()"></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-info" data-dismiss="modal">chiudi</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

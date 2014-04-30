@@ -10,13 +10,11 @@ app.views.login = Backbone.View.extend({
     /** init view **/
     initialize: function() {
         console.log('initializing login view');
-        OAuth.initialize('87ohweKrXUAJvbcPOUjNkvoskvk');
     },
 
     /** submit event for login **/
     events: {
-        'submit':                   'login',
-        'click #facebookButton':    'facebook'
+        'submit':                   'login'
     },
 
     login_home: function() {
@@ -112,35 +110,6 @@ app.views.login = Backbone.View.extend({
         jsonObj.username = this.$('#username').val();
         jsonObj.password = this.$('#password').val();
         return jsonObj;
-    },
-
-    /** facebook oAuth **/
-    facebook: function (event) {
-
-
-        //Using popup (option 1)
-        OAuth.popup('facebook', function(error, result) {
-            if (error) {
-                console.log('error ' + JSON.stringify(error)); // do something with error
-                return;
-            }
-            console.log('result ' + JSON.stringify(result)); // do something with result
-            var url = 'https://graph.facebook.com/me?access_token=' + result.access_token;
-            $.getJSON(url, function(data) {
-                console.log('user ' + JSON.stringify(data)); // do something with result
-
-                console.log('success');
-                var _model = new app.models.user(data);
-                app.global.tokensCollection.add(_model);
-                _model.save();
-
-                app.routers.router.prototype.dashboard();
-            });
-        });
-
-        //Using redirection (option 2)
-        //OAuth.redirect('twitter', "#dashboard");
-
     },
 
     /** destroy view and unbind all event **/
