@@ -5,9 +5,9 @@
  * Time: 14.07
  * To change this template use File | Settings | File Templates.
  */
-app.models.type = Backbone.Model.extend({
+app.models.site = Backbone.Model.extend({
     initialize: function(){
-        console.log("initializing report type model");
+        console.log("initializing site model");
     },
 
     sync: function(method, model, options) {
@@ -32,4 +32,5 @@ app.models.type = Backbone.Model.extend({
 
         Backbone.sync(method, model, options);
     }
+
 });

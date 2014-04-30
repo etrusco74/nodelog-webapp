@@ -15,7 +15,7 @@ app.views.index = Backbone.View.extend({
     /** render template **/
     render: function() {
         $(this.el).html(this.template());
-        $(document).attr('title', 'darkroom locator - find and share darkrooms | ' + this.language.type + ' | ' + this.language.lang);
+        $(document).attr('title', 'nodelog - realtime web analytics | ' + this.language.type + ' | ' + this.language.lang);
         this.$('#mycarousel').carousel({
             interval: 5000
         })
