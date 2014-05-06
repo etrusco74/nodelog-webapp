@@ -15,7 +15,7 @@ app.routers.router = Backbone.Router.extend({
         ':lang/registration':       'registration',
         ':lang/profile':            'profile',
         ':lang/password':           'password',
-        ':lang/dashboard':          'dashboard',
+        ':lang/welcome':            'welcome',
         ':lang/site':               'site',
         ':lang/credits':            'credits',
         ':lang/project':            'project',
@@ -67,7 +67,7 @@ app.routers.router = Backbone.Router.extend({
             this.navigate('#!' + lang + '/login', { trigger : false });
         }
         else {
-            this.dashboard();
+            this.welcome();
         }
     },
     /** private function **/
@@ -110,11 +110,11 @@ app.routers.router = Backbone.Router.extend({
             this.navigate('#!' + lang + '/registration', { trigger : false });
         }
         else {
-            this.dashboard();
+            this.welcome();
         }
     },
     /** private function **/
-    dashboard: function() {
+    welcome: function() {
         /** load data from localstorage service **/
         app.utils.loadTokens();
         var lang = app.utils.getLanguage();
@@ -127,20 +127,16 @@ app.routers.router = Backbone.Router.extend({
             app.global.navbarView = new app.views.navbar();
             app.global.navbarView.render();
             $('#navbar_content').html(app.global.navbarView.el);
-            /** render dashboard view **/
-            app.global.dashboardView = new app.views.dashboard();
-            app.global.dashboardView.render();
-            $('#content').html(app.global.dashboardView.el);
-            /** render sidebar view **/
-            app.global.sidebarView = new app.views.sidebar();
-            app.global.sidebarView.render('dashboard');
-            $('#sidebar_content').html(app.global.sidebarView.el);
+            /** render welcome view **/
+            app.global.welcomeView = new app.views.welcome();
+            app.global.welcomeView.render();
+            $('#content').html(app.global.welcomeView.el);
             /** render footer view **/
             app.global.footerView = new app.views.footer();
             app.global.footerView.render();
             $('#footer_content').html(app.global.footerView.el);
 
-            this.navigate('#!' + lang + '/dashboard', { trigger : false });
+            this.navigate('#!' + lang + '/welcome', { trigger : false });
         }
     },
     /** private function **/
@@ -161,10 +157,6 @@ app.routers.router = Backbone.Router.extend({
             app.global.profileView = new app.views.profile();
             app.global.profileView.render();
             $('#content').html(app.global.profileView.el);
-            /** render sidebar view **/
-            app.global.sidebarView = new app.views.sidebar();
-            app.global.sidebarView.render('profile');
-            $('#sidebar_content').html(app.global.sidebarView.el);
             /** render footer view **/
             app.global.footerView = new app.views.footer();
             app.global.footerView.render();
@@ -191,10 +183,6 @@ app.routers.router = Backbone.Router.extend({
             app.global.siteView = new app.views.site();
             app.global.siteView.render();
             $('#content').html(app.global.siteView.el);
-            /** render sidebar view **/
-            app.global.sidebarView = new app.views.sidebar();
-            app.global.sidebarView.render('site');
-            $('#sidebar_content').html(app.global.sidebarView.el);
             /** render footer view **/
             app.global.footerView = new app.views.footer();
             app.global.footerView.render();
@@ -265,10 +253,6 @@ app.routers.router = Backbone.Router.extend({
             app.global.passwordView = new app.views.password();
             app.global.passwordView.render();
             $('#content').html(app.global.passwordView.el);
-            /** render sidebar view **/
-            app.global.sidebarView = new app.views.sidebar();
-            app.global.sidebarView.render('password');
-            $('#sidebar_content').html(app.global.sidebarView.el);
             /** render footer view **/
             app.global.footerView = new app.views.footer();
             app.global.footerView.render();

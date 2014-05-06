@@ -1,12 +1,7 @@
 <!-- Site -->
 <div class="container">
     <div class="row">
-        <div class="col-lg-1">
-            <!--Sidebar content-->
-            <div id="sidebar_content"></div>
-        </div>
-
-        <div class="col-lg-11">
+        <div class="col-lg-12">
             <!--Body content-->
             <h3 class="lead">Gestisci i tuoi <span id='redcolor'>website</span></h3>
 
@@ -29,6 +24,7 @@
                         <div id='sitefield'>
                             <input type='text' name='_id' id='_id' placeholder="id" class="form-control" readonly /><br/>
                             <input type="text" name="website" id="website" placeholder="sito web" value="" class="form-control" /><br/>
+                            <textarea rows="3" name="tracking" id="tracking" placeholder="tracking code" class="form-control" onclick="this.select()"></textarea><br/>
                         </div>
 
                         <div id='buttonfield'>
@@ -38,25 +34,6 @@
                         <br>
 
                     </form>
-
-                    <!-- Modal perma -->
-                    <div class="modal fade" id="myModalPerma">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h3 class="modal-title"><span id="titlePerma"></span></h3>
-                                </div>
-                                <div class="modal-body">
-                                    <span id="bodyPerma"></span>
-                                    <br><br>
-                                    <textarea class="form-control" id="linkPerma" rows="1" onclick="this.select()"></textarea>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-info" data-dismiss="modal">chiudi</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
 

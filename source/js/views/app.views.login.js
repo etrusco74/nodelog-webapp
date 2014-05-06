@@ -62,7 +62,7 @@ app.views.login = Backbone.View.extend({
                     app.global.tokensCollection.add(_model);
                     _model.save();
 
-                    app.routers.router.prototype.dashboard();
+                    app.routers.router.prototype.welcome();
                 }
                 else      {
                     bootbox.dialog({

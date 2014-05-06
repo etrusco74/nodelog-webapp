@@ -11,8 +11,8 @@ app = {
         utils: {
 
             init: function (startup) {
-                app.utils.loadTemplate(     ['index', 'login', 'registration', 'profile', 'dashboard', 'footer', 'navbar', 'sidebar', 'site', 'credits', 'project', 'password', 'resend', 'activate', 'error', 'adlarge', 'admedium', 'adsmall'], function() {
-                    app.utils.loadLanguage( ['index', 'login', 'registration', 'profile', 'dashboard', 'footer', 'navbar', 'sidebar', 'site', 'credits', 'project', 'password', 'resend', 'activate', 'error'], function() {
+                app.utils.loadTemplate(     ['index', 'login', 'registration', 'profile', 'welcome', 'footer', 'navbar', 'site', 'credits', 'project', 'password', 'resend', 'activate', 'error', 'adlarge', 'admedium', 'adsmall'], function() {
+                    app.utils.loadLanguage( ['index', 'login', 'registration', 'profile', 'welcome', 'footer', 'navbar', 'site', 'credits', 'project', 'password', 'resend', 'activate', 'error'], function() {
                         if (startup) {
                             app.router = new app.routers.router();
                             try {Backbone.history.start();} catch(ex) { ; }
@@ -114,8 +114,7 @@ app = {
                 if (app.global.resendView) { app.global.resendView.destroy_view(); }
                 if (app.global.errorView) { app.global.errorView.destroy_view(); }
                 /** private view **/
-                if (app.global.dashboardView) { app.global.dashboardView.destroy_view(); }
-                if (app.global.sidebarView) { app.global.sidebarView.destroy_view(); }
+                if (app.global.welcomeView) { app.global.welcomeView.destroy_view(); }
                 if (app.global.profileView) { app.global.profileView.destroy_view();  }
                 if (app.global.siteView) { app.global.siteView.destroy_view();  }
                 if (app.global.passwordView) { app.global.passwordView.destroy_view();  }
@@ -124,8 +123,8 @@ app = {
 
         /** app config **/
         const: {
-            env : 'development',
-            //env : 'test',
+            //env : 'development',
+            env : 'test',
             //env : 'production',
             weburl : function() {
                 var url;

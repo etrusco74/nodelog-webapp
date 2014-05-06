@@ -6,14 +6,14 @@
  * To change this template use File | Settings | File Templates.
  *
  */
-app.views.dashboard = Backbone.View.extend({
+app.views.welcome = Backbone.View.extend({
 
     /** init view **/
     initialize: function() {
-        console.log('initializing dashboard view');
+        console.log('initializing welcome view');
     },
 
-    /** dashboard event **/
+    /** welcome event **/
     events: {
 
     },
@@ -30,7 +30,7 @@ app.views.dashboard = Backbone.View.extend({
         $(this.el).removeData().unbind();
         this.remove();
         Backbone.View.prototype.remove.call(this);
-        app.global.dashboardView = null;
+        app.global.welcomeView = null;
     }
 
 });
