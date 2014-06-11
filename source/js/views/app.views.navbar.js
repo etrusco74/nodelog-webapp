@@ -33,7 +33,6 @@ app.views.navbar = Backbone.View.extend({
             this.$('#ul_logout').hide();
         }
         else {
-            this.$("#gravatar_logout").empty().append($.gravatar(app.global.tokensCollection.at(0).get("email") , {size: 20}));
             this.$('#ul_login').hide();
             this.$('#ul_logout').show();
         }

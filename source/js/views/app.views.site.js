@@ -25,7 +25,7 @@ app.views.site = Backbone.View.extend({
     render: function() {
         $(this.el).html(this.template());
 
-        //this.site_renderSitesCollectionToUl(); FIXME
+        this.site_renderSitesCollectionToUl();
 
         /** validate form **/
         this.$("#siteForm").validate({
@@ -420,7 +420,8 @@ app.views.site = Backbone.View.extend({
                     }
                 });
             },
-            url: app.const.apiurl() + "sites/username/" + app.global.tokensCollection.at(0).get("username")
+            url: app.const.apiurl() + "sites/username/" + app.global.tokensCollection.at(0).get("username"),
+            private: true
         });
 
     },

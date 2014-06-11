@@ -22,8 +22,6 @@ app.views.profile = Backbone.View.extend({
     render: function() {
         $(this.el).html(this.template());
 
-        this.$("#gravatar").empty().append($.gravatar(app.global.tokensCollection.at(0).get("email") , {size: 40}));
-
         /** validate form **/
         this.$("#profileForm").validate({
             rules: {
