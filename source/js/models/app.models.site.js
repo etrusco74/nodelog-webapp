@@ -32,5 +32,4 @@ app.models.site = Backbone.Model.extend({
 
         Backbone.sync(method, model, options);
     }
-
 });

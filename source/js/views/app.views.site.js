@@ -262,35 +262,11 @@ app.views.site = Backbone.View.extend({
     site_formToJson: function () {
 
         var jsonObj = {};
-        var lng = $("#lng").text() * 1;         // => int val
-        var lat = $("#lat").text() * 1;
 
         if ($('#_id').val() != '')
             jsonObj.id = $('#_id').val();
 
-        jsonObj.username_id = app.global.tokensCollection.at(0).get("_id");
-        jsonObj.username = app.global.tokensCollection.at(0).get("username");
-
-        jsonObj.type_id = $('#siteTypes').val();
-        //app.global.type_value = jsonObj.type_id;
-        jsonObj.formatted_address = $("#formatted_address").text();
-        jsonObj.country = $("#country").text();
-        jsonObj.country_short = $("#country_short").text();
-        jsonObj.region = $("#administrative_area_level_1").text();
-        jsonObj.province = $("#administrative_area_level_2").text();
-        jsonObj.postal_code = $("#postal_code").text();
-        jsonObj.lng = lng;
-        jsonObj.lat = lat;
-
-        /** Point define **/
-        jsonObj.loc = {};
-        jsonObj.loc.type = "Point";
-        jsonObj.loc.coordinates = [];
-        jsonObj.loc.coordinates.push(lng, lat);
-
-        jsonObj.description = $('#description').val();
-        jsonObj.note = $('#note').val();
-        jsonObj.contact_email = $('#contact_email').val();
+        jsonObj.tag = $('#tag').val();
         jsonObj.website = $('#website').val();
 
         return jsonObj;
@@ -308,36 +284,16 @@ app.views.site = Backbone.View.extend({
                 success: function (model) {
 
                     $('#_id').val(model.get("_id"));
-                    $('#geocomplete_site').val(model.get("formatted_address"));
-                    $('#siteTypes').val( model.get("type_id")._id ).attr('selected',true);
-                    app.global.type_value = model.get("type_id").value;
-                    $('#description').val(model.get("description"));
-                    $('#note').val(model.get("note"));
-                    /** manage keywords **/
-                    var tag = [];
-                    tag = model.get("keywords");
-                    var str = '', i;
-                    for( i = 0; i < tag.length; i++) {
-                        str += '<span class=\"label label-info\">' + tag[i] + '</span> ';
-                    }
-                    $('#tag').html(str);
-                    $('#contact_email').val(model.get("contact_email"));
+                    $('#tag').val(model.get("tag"));
                     $('#website').val(model.get("website"));
+                    var str = "<!-- node log -->\n" +
+                              "<script type='text/javascript'>\n" +
+                              "nodelog_clientid = '"+model.get("client_id")+"';\n" +
+                              "</script>\n" +
+                              "<script type='text/javascript' src='" + app.const.weburl() + "/js/n.js?v=001'></script>\n" +
+                              "<!-- end node log -->";
 
-                    $('#formatted_address').text(model.get("formatted_address"));
-                    $('#country').text(model.get("country"));
-                    $('#country_short').text(model.get("country_short"));
-                    $('#administrative_area_level_1').text(model.get("region"));
-                    $('#administrative_area_level_2').text(model.get("province"));
-                    $('#postal_code').text(model.get("postal_code"));
-                    $('#lat').text(model.get("lat"));
-                    $('#lng').text(model.get("lng"));
-
-                    $("#geocomplete_site").geocomplete("find", model.get("formatted_address"));
-
-                    $("#accordion2").show();
-
-                    app.views.site.prototype.site_renderImagesCollectionToDiv(id);
+                    $('#tracking').val(str);
 
                     console.log(model);
                 },
@@ -358,30 +314,15 @@ app.views.site = Backbone.View.extend({
                     console.log(response);
                 },
                 url: app.const.apiurl() + 'site/id/' + id,
-                private: false
+                private: true
             });
         }
         else {
+
             $('#_id').val('');
-            $('#geocomplete_site').val('');
-            $('#siteTypes').val(0).attr('selected',true);
-            app.global.type_value='1';
-            $('#description').val('');
-            $('#note').val('');
-            $('#tag').html(that.language.tag_desc);
-            $('#contact_email').val('');
+            $('#tag').val('');
             $('#website').val('');
-
-            $('#formatted_address').text('');
-            $('#country').text('');
-            $('#country_short').text('');
-            $('#administrative_area_level_1').text('');
-            $('#administrative_area_level_2').text('');
-            $('#postal_code').text('');
-            $('#lat').text('');
-            $('#lng').text('');
-
-            $("#accordion2").hide();
+            $('#tracking').val('');
         }
     },
 
@@ -390,6 +331,7 @@ app.views.site = Backbone.View.extend({
 
         var that = this;
         var _sitesCollection = new app.collections.sites();
+
         /** GET SITES **/
         _sitesCollection.fetch({
             success : function(){
@@ -397,7 +339,7 @@ app.views.site = Backbone.View.extend({
                     console.log(_sitesCollection.models); // => collection have been populated
                     $('#siteList li').remove();
                     for( var i=0 in _sitesCollection.models ) {
-                        $('#siteList').append('<li><i class="icon-chevron-right"></i><a href="#' + that.language.lang	 + '/site/type_id/' + _sitesCollection.models[i].get("type_id")._id + '" id="' + _sitesCollection.models[i].get("_id") + '">' + _sitesCollection.models[i].get("formatted_address") + '</a></li>');
+                        $('#siteList').append('<li><i class="icon-chevron-right"></i><a href="#' + that.language.lang	 + '/site/id/' + _sitesCollection.models[i].get("_id") + '" id="' + _sitesCollection.models[i].get("_id") + '">' + _sitesCollection.models[i].get("tag") + '</a></li>');
                     }
                 }
                 else {

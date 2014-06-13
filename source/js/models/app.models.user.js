@@ -29,7 +29,7 @@ app.models.user = Backbone.Model.extend({
                 "X-Requested-With": "XMLHttpRequest",
                 "lang" : app.global.languagesCollection.at(0).get("lang")
             };
-        options.headers = headers;
+            options.headers = headers;
         }
 
         Backbone.sync(method, model, options);

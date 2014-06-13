@@ -17,6 +17,7 @@ app.routers.router = Backbone.Router.extend({
         ':lang/password':           'password',
         ':lang/welcome':            'welcome',
         ':lang/site':               'site',
+        ':lang/site/id/:id':        'site',
         ':lang/credits':            'credits',
         ':lang/project':            'project',
         ':lang/resend':                     'resend',
