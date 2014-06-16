@@ -15,6 +15,7 @@ app.routers.router = Backbone.Router.extend({
         ':lang/registration':       'registration',
         ':lang/profile':            'profile',
         ':lang/password':           'password',
+        ':lang/dashboard':          'dashboard',
         ':lang/welcome':            'welcome',
         ':lang/site':               'site',
         ':lang/site/id/:id':        'site',
@@ -260,6 +261,32 @@ app.routers.router = Backbone.Router.extend({
             $('#footer_content').html(app.global.footerView.el);
 
             this.navigate('#!' + lang + '/password', { trigger : false });
+        }
+    },
+    /** private function **/
+    dashboard: function() {
+        /** load data from localstorage service **/
+        app.utils.loadTokens();
+        var lang = app.utils.getLanguage();
+
+        if (app.global.tokensCollection.length == 0) {
+            this.index();
+        }
+        else {
+            /** render navbar view **/
+            app.global.navbarView = new app.views.navbar();
+            app.global.navbarView.render();
+            $('#navbar_content').html(app.global.navbarView.el);
+            /** render dashboard view **/
+            app.global.dashboardView = new app.views.dashboard();
+            app.global.dashboardView.render();
+            $('#content').html(app.global.dashboardView.el);
+            /** render footer view **/
+            app.global.footerView = new app.views.footer();
+            app.global.footerView.render();
+            $('#footer_content').html(app.global.footerView.el);
+
+            this.navigate('#!' + lang + '/dashboard', { trigger : false });
         }
     },
     /** public function **/

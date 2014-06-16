@@ -5,11 +5,11 @@
  * Time: 14.55
  * To change this template use File | Settings | File Templates.
  */
-app.views.index = Backbone.View.extend({
+app.views.dashboard = Backbone.View.extend({
 
     /** init view **/
     initialize: function() {
-        console.log('initializing index view');
+        console.log('initializing dashboard view');
     },
 
     /** render template **/
@@ -25,7 +25,7 @@ app.views.index = Backbone.View.extend({
         $(this.el).removeData().unbind();
         this.remove();
         Backbone.View.prototype.remove.call(this);
-        app.global.indexView = null;
+        app.global.dashboardView = null;
     }
 
 });

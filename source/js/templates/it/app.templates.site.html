@@ -7,7 +7,7 @@
 
             <div class="row">
 
-                <div class="col-lg-2 col-lg-offset-1">
+                <div class="col-lg-2">
 
                     <h5>i tuoi website</h5>
                     <ul class="nav bs-sidenav" id="siteList">
@@ -17,47 +17,51 @@
 
                 </div>
 
-                <div class="col-lg-4">
+                <div class="col-lg-10">
 
                     <form id="siteForm" method="post" class="form-horizontal" role="form">
 
-                        <div id='sitefield'>
-
-                            <div class="form-group has-warning">
-                                <label for="_id" class="col-sm-4 control-label">client_id</label>
-                                <div class="col-sm-8">
-                                    <input type='text' name='_id' id='_id' placeholder='client_id' class='form-control' readonly />
-                                </div>
+                        <div class="form-group has-warning">
+                            <label for="_id" class="col-lg-4 control-label">id</label>
+                            <div class="col-lg-4">
+                                <input type='text' name='_id' id='_id' placeholder='_id' class='form-control' readonly />
                             </div>
-
-                            <div class="form-group">
-                                <label for="tag" class="col-sm-4 control-label">descrizione</label>
-                                <div class="col-sm-8">
-                                    <input type='text' name='tag' id='tag'  placeholder='tag' class='form-control' />
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="website" class="col-sm-4 control-label">website</label>
-                                <div class="col-sm-8">
-                                    <input type='text' name='website' id='website'  placeholder='website' placeholder='sito web' value='' class='form-control' />
-                                </div>
-                            </div>
-
-                            <div class="form-group has-warning">
-                                <label for="tracking" class="col-sm-4 control-label">tracking code</label>
-                                <div class="col-sm-8">
-                                    <textarea rows='3' name='tracking' id='tracking' placeholder='tracking code' class='form-control' onclick='this.select()' readonly></textarea>
-                                </div>
-                            </div>
-
                         </div>
 
-                        <div id='buttonfield'>
-                            <button type="submit" id="siteButton" class="btn btn-success">salva</button>
-                            <button type="button" id="deleteSiteButton" class="btn btn-danger">cancella</button>
+                        <div class="form-group has-warning">
+                            <label for="client_id" class="col-lg-4 control-label">client_id</label>
+                            <div class="col-lg-4">
+                                <input type='text' name='client_id' id='client_id' placeholder='client_id' class='form-control' readonly />
+                            </div>
                         </div>
-                        <br>
+
+                        <div class="form-group">
+                            <label for="tag" class="col-lg-4 control-label">descrizione</label>
+                            <div class="col-lg-4">
+                                <input type='text' name='tag' id='tag'  placeholder='tag' class='form-control' />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="website" class="col-lg-4 control-label">website</label>
+                            <div class="col-lg-4">
+                                <input type='text' name='website' id='website'  placeholder='website' placeholder='sito web' value='' class='form-control' />
+                            </div>
+                        </div>
+
+                        <div class="form-group has-warning">
+                            <label for="tracking" class="col-lg-4 control-label">tracking code</label>
+                            <div class="col-lg-4">
+                                <textarea rows='3' name='tracking' id='tracking' placeholder='tracking code' class='form-control' onclick='this.select()' readonly></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-4 col-lg-offset-4">
+                                <button type="submit" id="siteButton" class="btn btn-success btn-large col-lg-5">salva</button>
+                                <button type="button" id="deleteSiteButton" class="btn btn-danger btn-large col-lg-5 col-lg-offset-2">cancella</button>
+                            </div>
+                        </div>
 
                     </form>
 
