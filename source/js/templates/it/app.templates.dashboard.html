@@ -1,10 +1,18 @@
 <!-- Dashboard -->
 <div class="container">
     <div class="row">
-        <div class="col-lg-4 col-lg-offset-4">
-            <p class='text-muted'>
-                dashboard
-            </p>
+        <div class="col-lg-12">
+
+                <!-- content -->
+                <div class="container">
+                    <h3>connection</h3>
+                    <p>connected to <span id='con' class="text-danger"></span> - day : <span id='day' class="text-danger"></span> - page view : <span id='pageView' class="text-danger">0</span> - unique access : <span id='uniqueAccess' class="text-danger">0</span></p>
+                    <ul id='bestPages' class="list-unstyled"></ul>
+                    <h3>realtime log</h3>
+                    <ul id='log' class="list-unstyled"></ul>
+                </div>
+                <div id="push"></div>
+
         </div>
     </div>
 </div>

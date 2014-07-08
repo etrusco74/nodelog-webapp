@@ -15,7 +15,7 @@ app.routers.router = Backbone.Router.extend({
         ':lang/registration':       'registration',
         ':lang/profile':            'profile',
         ':lang/password':           'password',
-        ':lang/dashboard':          'dashboard',
+        ':lang/dashboard/:client_id':          'dashboard',
         ':lang/welcome':            'welcome',
         ':lang/site':               'site',
         ':lang/site/id/:id':        'site',
@@ -264,7 +264,8 @@ app.routers.router = Backbone.Router.extend({
         }
     },
     /** private function **/
-    dashboard: function() {
+    dashboard: function(lang, client_id) {
+
         /** load data from localstorage service **/
         app.utils.loadTokens();
         var lang = app.utils.getLanguage();
@@ -286,7 +287,9 @@ app.routers.router = Backbone.Router.extend({
             app.global.footerView.render();
             $('#footer_content').html(app.global.footerView.el);
 
-            this.navigate('#!' + lang + '/dashboard', { trigger : false });
+            app.global.dashboardView.init_socket(client_id);
+
+            this.navigate('#!' + lang + '/dashboard/' + client_id, { trigger : false });
         }
     },
     /** public function **/
