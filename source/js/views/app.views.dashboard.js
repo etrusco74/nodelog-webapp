@@ -28,20 +28,30 @@ app.views.dashboard = Backbone.View.extend({
         /** start socket.io **/
         var name = client_id;
 
-        /**
-        if (!(app.global.socket === null)){
+        /** manage connection **/
+        if (app.global.socket === null) {
+            /** start connection **/
+            app.global.socket = io.connect('http://nodelog-c9-etrusco.c9.io');
+        }
+        else {
             if (app.global.socket.socket.connected){
+                /** disconnect **/
                 app.global.socket.disconnect();
+                /** reconnect **/
+                setTimeout(function(){
+                    app.global.socket.socket.reconnect();
+                },1000);
             }
             else {
+                /** reconnect **/
+                setTimeout(function(){
+                    app.global.socket.socket.reconnect();
+                },1000);
                 //var socket = io.connect(window.location.hostname); FIXME
-                app.global.socket = io.connect('http://nodelogapp.herokuapp.com/');
+                //app.global.socket = io.connect('http://nodelogapp.herokuapp.com');
+                //app.global.socket = io.connect('http://nodelog-c9-etrusco.c9.io');
             }
         }
-        **/
-
-        /** start connection **/
-        app.global.socket = io.connect('http://nodelog-c9-etrusco.c9.io');
 
         app.global.socket.on('connect', function () {
             app.global.socket.emit('identify', name);
