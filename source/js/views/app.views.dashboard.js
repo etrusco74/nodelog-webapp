@@ -26,7 +26,7 @@ app.views.dashboard = Backbone.View.extend({
         var that = this;
 
         /** start socket.io **/
-        var name = client_id;
+        var _client_id = client_id;
 
         /** manage connection **/
         if (app.global.socket === null) {
@@ -34,38 +34,27 @@ app.views.dashboard = Backbone.View.extend({
             app.global.socket = io.connect('http://nodelog-c9-etrusco.c9.io');
         }
         else {
-            if (app.global.socket.socket.connected){
-                /** disconnect **/
-                app.global.socket.disconnect();
-                /** reconnect **/
-                setTimeout(function(){
-                    app.global.socket.socket.reconnect();
-                },1000);
-            }
-            else {
-                /** reconnect **/
-                setTimeout(function(){
-                    app.global.socket.socket.reconnect();
-                },1000);
-                //var socket = io.connect(window.location.hostname); FIXME
-                //app.global.socket = io.connect('http://nodelogapp.herokuapp.com');
-                //app.global.socket = io.connect('http://nodelog-c9-etrusco.c9.io');
-            }
+            app.global.socket.emit('change', _client_id);
         }
 
         app.global.socket.on('connect', function () {
-            app.global.socket.emit('identify', name);
-            $("#log").prepend('<li><br>Connected to <b>' + name + '</b></li>');
-            $("#con").text(name);
+            app.global.socket.emit('create', _client_id);
+            $("#log").prepend('<li><br>Connected to <b>' + _client_id + '</b></li>');
+            $("#con").text(_client_id);
         });
 
         app.global.socket.on('disconnected', function() {
             app.global.socket.emit('disconnect');
         });
 
-        app.global.socket.on('message', function (msg) {
-            $("#log").prepend('<li><small><span class="glyphicon glyphicon-hand-right"></span> ' + JSON.stringify(msg) + '</small></li>');
+        app.global.socket.on('message', function (msg, id) {
+            $("#log").prepend('<li><small><span class="glyphicon glyphicon-hand-right"></span> ' + JSON.stringify(msg) + ' >>> ' + JSON.stringify(id) + '</small></li>');
             $('#log li:first').hide().fadeIn(2000);
+        });
+
+        app.global.socket.on('update', function (msg) {
+            $("#log").prepend('<li><br>Connected to <b>' + msg + '</b></li>');
+            $("#con").text(msg);
         });
 
         app.global.socket.on('num', function (msg) {
