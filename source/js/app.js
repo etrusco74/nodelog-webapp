@@ -123,8 +123,8 @@ app = {
 
         /** app config **/
         const: {
-            //env : 'development',
-            env : 'test',
+            env : 'development',
+            //env : 'test',
             //env : 'production',
             weburl : function() {
                 var url;
