@@ -284,6 +284,7 @@ app.views.site = Backbone.View.extend({
                 success: function (model) {
 
                     $('#_id').val(model.get("_id"));
+                    $('#client_id').val(model.get("client_id"));
                     $('#tag').val(model.get("tag"));
                     $('#website').val(model.get("website"));
                     var str = "<!-- node log -->\n" +
@@ -320,6 +321,7 @@ app.views.site = Backbone.View.extend({
         else {
 
             $('#_id').val('');
+            $('#client_id').val('');
             $('#tag').val('');
             $('#website').val('');
             $('#tracking').val('');
@@ -339,7 +341,7 @@ app.views.site = Backbone.View.extend({
                     console.log(_sitesCollection.models); // => collection have been populated
                     $('#siteList li').remove();
                     for( var i=0 in _sitesCollection.models ) {
-                        $('#siteList').append('<li><i class="icon-chevron-right"></i><a href="#' + that.language.lang	 + '/site/id/' + _sitesCollection.models[i].get("_id") + '" id="' + _sitesCollection.models[i].get("_id") + '">' + _sitesCollection.models[i].get("tag") + '</a></li>');
+                        $('#siteList').append('<li><a href="#' + that.language.lang	 + '/site/id/' + _sitesCollection.models[i].get("_id") + '" id="' + _sitesCollection.models[i].get("_id") + '"><span class="glyphicon glyphicon-paperclip"></span> ' + _sitesCollection.models[i].get("tag") + '</a></li>');
                     }
                 }
                 else {

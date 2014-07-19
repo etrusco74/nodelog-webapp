@@ -16,10 +16,6 @@ app.views.index = Backbone.View.extend({
     render: function() {
         $(this.el).html(this.template());
         $(document).attr('title', 'nodelog - realtime web analytics | ' + this.language.type + ' | ' + this.language.lang);
-        this.$('#mycarousel').carousel({
-            interval: 5000
-        })
-
         return this;
     },
 

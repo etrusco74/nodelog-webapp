@@ -11,8 +11,8 @@ app = {
         utils: {
 
             init: function (startup) {
-                app.utils.loadTemplate(     ['index', 'login', 'registration', 'profile', 'welcome', 'footer', 'navbar', 'site', 'credits', 'project', 'password', 'resend', 'activate', 'error', 'adlarge', 'admedium', 'adsmall'], function() {
-                    app.utils.loadLanguage( ['index', 'login', 'registration', 'profile', 'welcome', 'footer', 'navbar', 'site', 'credits', 'project', 'password', 'resend', 'activate', 'error'], function() {
+                app.utils.loadTemplate(     ['index', 'login', 'registration', 'profile', 'welcome', 'footer', 'navbar', 'site', 'credits', 'dashboard', 'project', 'password', 'resend', 'activate', 'error', 'adlarge', 'admedium', 'adsmall'], function() {
+                    app.utils.loadLanguage( ['index', 'login', 'registration', 'profile', 'welcome', 'footer', 'navbar', 'site', 'credits', 'dashboard', 'project', 'password', 'resend', 'activate', 'error'], function() {
                         if (startup) {
                             app.router = new app.routers.router();
                             try {Backbone.history.start();} catch(ex) { ; }
@@ -118,6 +118,7 @@ app = {
                 if (app.global.profileView) { app.global.profileView.destroy_view();  }
                 if (app.global.siteView) { app.global.siteView.destroy_view();  }
                 if (app.global.passwordView) { app.global.passwordView.destroy_view();  }
+                if (app.global.dashboardView) { app.global.dashboardView.destroy_view();  }
             }
         },
 
@@ -148,6 +149,7 @@ app = {
 
         /** app global var **/
         global: {
+            socket : null,
             default_language : function(){
                 var lang = window.navigator.userLanguage || window.navigator.language;
                 lang = lang.substring(0,2);
