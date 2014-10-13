@@ -34,7 +34,8 @@ app.views.dashboard = Backbone.View.extend({
             app.global.socket = io.connect('http://nodelog-c9-etrusco.c9.io');
         }
         else {
-            app.global.socket.emit('change', _client_id);
+            location.reload(true);
+            //app.global.socket.emit('change', _client_id);
         }
 
         app.global.socket.on('connect', function () {
