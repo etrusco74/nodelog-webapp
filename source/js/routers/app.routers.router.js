@@ -25,24 +25,32 @@ app.routers.router = Backbone.Router.extend({
         ':lang/activate/:id/:apikey':       'activate',
         '*undefined':                       'error'
     },
+
+    /** global function **/
+    navBarContent: function(){
+        app.global.views['navbar'] = new app.views.navbar();
+        app.global.views['navbar'].render();
+        $('#navbar_content').html(app.global.views['navbar'].el);
+    },
+    footerContent: function(){
+        app.global.views['footer'] = new app.views.footer();
+        app.global.views['footer'].render();
+        $('#footer_content').html(app.global.views['footer'].el);
+    },
+
     /** public function **/
     index: function() {
         /** load data from localstorage service **/
         app.utils.loadTokens();
         var lang = app.utils.getLanguage();
-
         /** render navbar view **/
-        app.global.navbarView = new app.views.navbar();
-        app.global.navbarView.render();
-        $('#navbar_content').html(app.global.navbarView.el);
+        this.navBarContent();
         /** render index view **/
-        app.global.indexView = new app.views.index();
-        app.global.indexView.render();
-        $('#content').html(app.global.indexView.el);
+        app.global.views['index'] = new app.views.index();
+        app.global.views['index'].render();
+        $('#content').html(app.global.views['index'].el);
         /** render footer view **/
-        app.global.footerView = new app.views.footer();
-        app.global.footerView.render();
-        $('#footer_content').html(app.global.footerView.el);
+        this.footerContent();
 
         this.navigate('#!' + lang, { trigger : false });
     },
@@ -54,17 +62,13 @@ app.routers.router = Backbone.Router.extend({
 
         if (app.global.tokensCollection.length == 0) {
             /** render navbar view **/
-            app.global.navbarView = new app.views.navbar();
-            app.global.navbarView.render();
-            $('#navbar_content').html(app.global.navbarView.el);
+            this.navBarContent();
             /** render login view **/
-            app.global.loginView = new app.views.login();
-            app.global.loginView.render();
-            $('#content').html(app.global.loginView.el);
+            app.global.views['login'] = new app.views.login();
+            app.global.views['login'].render();
+            $('#content').html(app.global.views['login'].el);
             /** render footer view **/
-            app.global.footerView = new app.views.footer();
-            app.global.footerView.render();
-            $('#footer_content').html(app.global.footerView.el);
+            this.footerContent();
 
             this.navigate('#!' + lang + '/login', { trigger : false });
         }
@@ -97,17 +101,13 @@ app.routers.router = Backbone.Router.extend({
 
         if (app.global.tokensCollection.length == 0) {
             /** render navbar view **/
-            app.global.navbarView = new app.views.navbar();
-            app.global.navbarView.render();
-            $('#navbar_content').html(app.global.navbarView.el);
+            this.navBarContent();
             /** render registration view **/
-            app.global.registrationView = new app.views.registration();
-            app.global.registrationView.render();
-            $('#content').html(app.global.registrationView.el);
+            app.global.views['registration'] = new app.views.registration();
+            app.global.views['registration'].render();
+            $('#content').html(app.global.views['registration'].el);
             /** render footer view **/
-            app.global.footerView = new app.views.footer();
-            app.global.footerView.render();
-            $('#footer_content').html(app.global.footerView.el);
+            this.footerContent();
 
             this.navigate('#!' + lang + '/registration', { trigger : false });
         }
@@ -126,17 +126,13 @@ app.routers.router = Backbone.Router.extend({
         }
         else {
             /** render navbar view **/
-            app.global.navbarView = new app.views.navbar();
-            app.global.navbarView.render();
-            $('#navbar_content').html(app.global.navbarView.el);
+            this.navBarContent();
             /** render welcome view **/
-            app.global.welcomeView = new app.views.welcome();
-            app.global.welcomeView.render();
-            $('#content').html(app.global.welcomeView.el);
+            app.global.views['welcome'] = new app.views.welcome();
+            app.global.views['welcome'].render();
+            $('#content').html(app.global.views['welcome'].el);
             /** render footer view **/
-            app.global.footerView = new app.views.footer();
-            app.global.footerView.render();
-            $('#footer_content').html(app.global.footerView.el);
+            this.footerContent();
 
             this.navigate('#!' + lang + '/welcome', { trigger : false });
         }
@@ -152,17 +148,13 @@ app.routers.router = Backbone.Router.extend({
         }
         else {
             /** render navbar view **/
-            app.global.navbarView = new app.views.navbar();
-            app.global.navbarView.render();
-            $('#navbar_content').html(app.global.navbarView.el);
+            this.navBarContent();
             /** render profile view **/
-            app.global.profileView = new app.views.profile();
-            app.global.profileView.render();
-            $('#content').html(app.global.profileView.el);
+            app.global.views['profile'] = new app.views.profile();
+            app.global.views['profile'].render();
+            $('#content').html(app.global.views['profile'].el);
             /** render footer view **/
-            app.global.footerView = new app.views.footer();
-            app.global.footerView.render();
-            $('#footer_content').html(app.global.footerView.el);
+            this.footerContent();
 
             this.navigate('#!' + lang + '/profile', { trigger : false });
         }
@@ -178,17 +170,13 @@ app.routers.router = Backbone.Router.extend({
         }
         else {
             /** render navbar view **/
-            app.global.navbarView = new app.views.navbar();
-            app.global.navbarView.render();
-            $('#navbar_content').html(app.global.navbarView.el);
+            this.navBarContent();
             /** render site view **/
-            app.global.siteView = new app.views.site();
-            app.global.siteView.render();
-            $('#content').html(app.global.siteView.el);
+            app.global.views['site'] = new app.views.site();
+            app.global.views['site'].render();
+            $('#content').html(app.global.views['site'].el);
             /** render footer view **/
-            app.global.footerView = new app.views.footer();
-            app.global.footerView.render();
-            $('#footer_content').html(app.global.footerView.el);
+            this.footerContent();
 
             this.navigate('#!' + lang + '/site', { trigger : false });
         }
@@ -198,19 +186,14 @@ app.routers.router = Backbone.Router.extend({
         /** load data from localstorage service **/
         app.utils.loadTokens();
         var lang = app.utils.getLanguage();
-
         /** render navbar view **/
-        app.global.navbarView = new app.views.navbar();
-        app.global.navbarView.render();
-        $('#navbar_content').html(app.global.navbarView.el);
+        this.navBarContent();
         /** render credits view **/
-        app.global.creditsView = new app.views.credits();
-        app.global.creditsView.render();
-        $('#content').html(app.global.creditsView.el);
+        app.global.views['credits'] = new app.views.credits();
+        app.global.views['credits'].render();
+        $('#content').html(app.global.views['credits'].el);
         /** render footer view **/
-        app.global.footerView = new app.views.footer();
-        app.global.footerView.render();
-        $('#footer_content').html(app.global.footerView.el);
+        this.footerContent();
 
         this.navigate('#!' + lang + '/credits', { trigger : false });
 
@@ -220,19 +203,14 @@ app.routers.router = Backbone.Router.extend({
         /** load data from localstorage service **/
         app.utils.loadTokens();
         var lang = app.utils.getLanguage();
-
         /** render navbar view **/
-        app.global.navbarView = new app.views.navbar();
-        app.global.navbarView.render();
-        $('#navbar_content').html(app.global.navbarView.el);
+        this.navBarContent();
         /** render documentation view **/
-        app.global.projectView = new app.views.project();
-        app.global.projectView.render();
-        $('#content').html(app.global.projectView.el);
+        app.global.views['project'] = new app.views.project();
+        app.global.views['project'].render();
+        $('#content').html(app.global.views['project'].el);
         /** render footer view **/
-        app.global.footerView = new app.views.footer();
-        app.global.footerView.render();
-        $('#footer_content').html(app.global.footerView.el);
+        this.footerContent();
 
         this.navigate('#!' + lang + '/project', { trigger : false });
 
@@ -248,17 +226,13 @@ app.routers.router = Backbone.Router.extend({
         }
         else {
             /** render navbar view **/
-            app.global.navbarView = new app.views.navbar();
-            app.global.navbarView.render();
-            $('#navbar_content').html(app.global.navbarView.el);
+            this.navBarContent();
             /** render password view **/
-            app.global.passwordView = new app.views.password();
-            app.global.passwordView.render();
-            $('#content').html(app.global.passwordView.el);
+            app.global.views['password'] = new app.views.password();
+            app.global.views['password'].render();
+            $('#content').html(app.global.views['password'].el);
             /** render footer view **/
-            app.global.footerView = new app.views.footer();
-            app.global.footerView.render();
-            $('#footer_content').html(app.global.footerView.el);
+            this.footerContent();
 
             this.navigate('#!' + lang + '/password', { trigger : false });
         }
@@ -275,19 +249,15 @@ app.routers.router = Backbone.Router.extend({
         }
         else {
             /** render navbar view **/
-            app.global.navbarView = new app.views.navbar();
-            app.global.navbarView.render();
-            $('#navbar_content').html(app.global.navbarView.el);
+            this.navBarContent();
             /** render dashboard view **/
-            app.global.dashboardView = new app.views.dashboard();
-            app.global.dashboardView.render();
-            $('#content').html(app.global.dashboardView.el);
+            app.global.views['dashboard'] = new app.views.dashboard();
+            app.global.views['dashboard'].render();
+            $('#content').html(app.global.views['dashboard'].el);
             /** render footer view **/
-            app.global.footerView = new app.views.footer();
-            app.global.footerView.render();
-            $('#footer_content').html(app.global.footerView.el);
+            this.footerContent();
 
-            app.global.dashboardView.init_socket(client_id);
+            app.global.views['dashboard'].init_socket(client_id);
 
             this.navigate('#!' + lang + '/dashboard/' + client_id, { trigger : false });
         }
@@ -297,19 +267,14 @@ app.routers.router = Backbone.Router.extend({
         /** load data from localstorage service **/
         app.utils.loadTokens();
         var lang = app.utils.getLanguage();
-
         /** render navbar view **/
-        app.global.navbarView = new app.views.navbar();
-        app.global.navbarView.render();
-        $('#navbar_content').html(app.global.navbarView.el);
+        this.navBarContent();
         /** render resend view **/
-        app.global.resendView = new app.views.resend();
-        app.global.resendView.render();
-        $('#content').html(app.global.resendView.el);
+        app.global.views['resend'] = new app.views.resend();
+        app.global.views['resend'].render();
+        $('#content').html(app.global.views['resend'].el);
         /** render footer view **/
-        app.global.footerView = new app.views.footer();
-        app.global.footerView.render();
-        $('#footer_content').html(app.global.footerView.el);
+        this.footerContent();
 
         this.navigate('#!' + lang + '/resend', { trigger : false });
 
@@ -319,22 +284,16 @@ app.routers.router = Backbone.Router.extend({
         /** load data from localstorage service **/
         app.utils.loadTokens();
         var lang = app.utils.getLanguage();
-
         /** render navbar view **/
-        app.global.navbarView = new app.views.navbar();
-        app.global.navbarView.render();
-        $('#navbar_content').html(app.global.navbarView.el);
+        this.navBarContent();
         /** render activate view **/
-        app.global.activateView = new app.views.activate();
-        app.global.activateView.render();
-        $('#content').html(app.global.activateView.el);
+        app.global.views['activate'] = new app.views.activate();
+        app.global.views['activate'].render();
+        $('#content').html(app.global.views['activate'].el);
         /** render footer view **/
-        app.global.footerView = new app.views.footer();
-        app.global.footerView.render();
-        $('#footer_content').html(app.global.footerView.el);
-
+        this.footerContent();
         /** activate apiKey **/
-        app.global.activateView.init_activate(id, apikey);
+        app.global.views['activate'].init_activate(id, apikey);
 
         this.navigate('#!' + lang + '/activate/' + id + '/' + apikey, { trigger : false });
 
@@ -344,19 +303,14 @@ app.routers.router = Backbone.Router.extend({
         /** load data from localstorage service **/
         app.utils.loadTokens();
         var lang = app.utils.getLanguage();
-
         /** render navbar view **/
-        app.global.navbarView = new app.views.navbar();
-        app.global.navbarView.render();
-        $('#navbar_content').html(app.global.navbarView.el);
+        this.navBarContent();
         /** render error view **/
-        app.global.errorView = new app.views.error();
-        app.global.errorView.render();
-        $('#content').html(app.global.errorView.el);
+        app.global.views['error'] = new app.views.error();
+        app.global.views['error'].render();
+        $('#content').html(app.global.views['error'].el);
         /** render footer view **/
-        app.global.footerView = new app.views.footer();
-        app.global.footerView.render();
-        $('#footer_content').html(app.global.footerView.el);
+        this.footerContent();
 
         this.navigate('#!' + lang + '/error', { trigger : false });
 

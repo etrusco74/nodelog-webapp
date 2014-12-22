@@ -32,6 +32,7 @@ app.views.dashboard = Backbone.View.extend({
         if (app.global.socket === null) {
             /** start connection **/
             app.global.socket = io.connect('http://nodelog-c9-etrusco.c9.io');
+            //app.global.socket = io.connect('http://localhost:8080');
         }
         else {
             location.reload(true);
@@ -48,8 +49,8 @@ app.views.dashboard = Backbone.View.extend({
             app.global.socket.emit('disconnect');
         });
 
-        app.global.socket.on('message', function (msg, id) {
-            $("#log").prepend('<li><small><span class="glyphicon glyphicon-hand-right"></span> ' + JSON.stringify(msg) + ' >>> ' + JSON.stringify(id) + '</small></li>');
+        app.global.socket.on('message', function (msg) {
+            $("#log").prepend('<li><small><span class="glyphicon glyphicon-hand-right"></span> ' + JSON.stringify(msg) + '</small></li>');
             $('#log li:first').hide().fadeIn(2000);
         });
 
@@ -82,7 +83,7 @@ app.views.dashboard = Backbone.View.extend({
         $(this.el).removeData().unbind();
         this.remove();
         Backbone.View.prototype.remove.call(this);
-        app.global.dashboardView = null;
+        delete app.global.views['dashboard'];
     }
 
 });

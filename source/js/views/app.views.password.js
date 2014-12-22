@@ -194,7 +194,7 @@ app.views.password = Backbone.View.extend({
         $(this.el).removeData().unbind();
         this.remove();
         Backbone.View.prototype.remove.call(this);
-        app.global.passwordView = null;
+        delete app.global.views['password'];
     }
 
 });

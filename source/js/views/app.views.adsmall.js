@@ -24,7 +24,7 @@ app.views.adsmall = Backbone.View.extend({
         $(this.el).removeData().unbind();
         this.remove();
         Backbone.View.prototype.remove.call(this);
-        app.global.adsmallView = null;
+        delete app.global.views['adsmall'];
     }
 
 });

@@ -135,7 +135,7 @@ app.views.resend = Backbone.View.extend({
         $(this.el).removeData().unbind();
         this.remove();
         Backbone.View.prototype.remove.call(this);
-        app.global.resendView = null;
+        delete app.global.views['resend'];
     }
 
 });

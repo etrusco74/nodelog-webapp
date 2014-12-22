@@ -2,14 +2,14 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-4 col-lg-offset-4">
-            <h3 class="lead">accedi alla tua dashboard personale</h3>
+            <h3 class="lead"><%=title%></h3>
             <form class="loginForm" id="loginForm" method="post">
                 <fieldset>
                     <input type="text" class="form-control" name="username" id="username" placeholder="Username" value="" /><br>
                     <input type="password" class="form-control" name="password" id="password" placeholder="Password" value="" /><br>
-                    <small><a href="#it/registration">è la prima volta che accedi?</a></small><br>
-                    <small><a href="#it/resend">hai dimenticato la password?</a></small><br><br>
-                    <button type="submit" id="loginButton" class="btn btn-success btn-block btn-large">accedi</button>
+                    <small><a href="#it/registration"><%=reg_msg%></a></small><br>
+                    <small><a href="#it/resend"><%=resend_msg%></a></small><br><br>
+                    <button type="submit" id="loginButton" class="btn btn-success btn-block btn-large"><%=login_msg%></button>
                 </fieldset>
             </form>
         </div>

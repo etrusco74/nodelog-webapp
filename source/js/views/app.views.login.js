@@ -23,7 +23,7 @@ app.views.login = Backbone.View.extend({
 
     /** render template **/
     render: function() {
-        $(this.el).html(this.template());
+        $(this.el).html(this.template(this.language));
 
         /** validate form **/
         this.$("#loginForm").validate({
@@ -118,7 +118,7 @@ app.views.login = Backbone.View.extend({
         $(this.el).removeData().unbind();
         this.remove();
         Backbone.View.prototype.remove.call(this);
-        app.global.loginView = null;
+        delete app.global.views['login'];
     }
 
 });

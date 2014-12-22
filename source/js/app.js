@@ -11,8 +11,8 @@ app = {
         utils: {
 
             init: function (startup) {
-                app.utils.loadTemplate(     ['index', 'login', 'registration', 'profile', 'welcome', 'footer', 'navbar', 'site', 'credits', 'dashboard', 'project', 'password', 'resend', 'activate', 'error', 'adlarge', 'admedium', 'adsmall'], function() {
-                    app.utils.loadLanguage( ['index', 'login', 'registration', 'profile', 'welcome', 'footer', 'navbar', 'site', 'credits', 'dashboard', 'project', 'password', 'resend', 'activate', 'error'], function() {
+                app.utils.loadTemplate( app.views_array , function() {
+                    app.utils.loadLanguage( app.views_array , function() {
                         if (startup) {
                             app.router = new app.routers.router();
                             try {Backbone.history.start();} catch(ex) { ; }
@@ -64,14 +64,13 @@ app = {
             },
 
             loadTemplate: function(views, callback) {
-                var lang = app.utils.getLanguage();
 
                 var deferreds = [];
                 $.each(views, function(index, view) {
                     if (app.views[view]) {
 
                         /** load template **/
-                        deferreds.push($.get('js/templates/' + lang + '/app.templates.' + view + '.html', function(data) {
+                        deferreds.push($.get('js/templates/app.templates.' + view + '.html', function(data) {
                             app.views[view].prototype.template = _.template(data);
                         }));
 
@@ -102,29 +101,18 @@ app = {
             },
 
             destroyViews: function(){
-                /** public view **/
-                if (app.global.indexView) { app.global.indexView.destroy_view(); }
-                if (app.global.navbarView) { app.global.navbarView.destroy_view();}
-                if (app.global.footerView) { app.global.footerView.destroy_view();  }
-                if (app.global.loginView) { app.global.loginView.destroy_view(); }
-                if (app.global.registrationView) { app.global.registrationView.destroy_view(); }
-                if (app.global.creditsView) { app.global.creditsView.destroy_view(); }
-                if (app.global.projectView) { app.global.projectView.destroy_view(); }
-                if (app.global.activateView) { app.global.activateView.destroy_view(); }
-                if (app.global.resendView) { app.global.resendView.destroy_view(); }
-                if (app.global.errorView) { app.global.errorView.destroy_view(); }
-                /** private view **/
-                if (app.global.welcomeView) { app.global.welcomeView.destroy_view(); }
-                if (app.global.profileView) { app.global.profileView.destroy_view();  }
-                if (app.global.siteView) { app.global.siteView.destroy_view();  }
-                if (app.global.passwordView) { app.global.passwordView.destroy_view();  }
-                if (app.global.dashboardView) { app.global.dashboardView.destroy_view();  }
+
+                $.each(app.views_array, function(index, view) {
+                    if (app.global.views[view])    {app.global.views[view].destroy_view()};
+                });
+
             }
         },
 
         /** app config **/
         const: {
             env : 'development',
+            //env : 'local',
             //env : 'test',
             //env : 'production',
             weburl : function() {
@@ -132,6 +120,9 @@ app = {
                 switch(this.env) {
                     case'development':
                         url = 'http://nodelog-c9-etrusco.c9.io/';
+                        break;
+                    case'local':
+                        url = 'http://localhost:8080/';
                         break;
                     case 'test':
                         url = 'http://nodelogapp.herokuapp.com/';
@@ -157,10 +148,13 @@ app = {
                     lang = "en";
                 }
                 return lang;
-            }
+            },
+            views : {}
         },
 
         /** languages **/
-        languages: ["en", "it"]
+        languages: ["en", "it"],
+
+        views_array : ['index', 'login', 'registration', 'profile', 'welcome', 'footer', 'navbar', 'site', 'credits', 'dashboard', 'project', 'password', 'resend', 'activate', 'error', 'adlarge', 'admedium', 'adsmall']
 
 };

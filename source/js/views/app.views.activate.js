@@ -94,7 +94,7 @@ app.views.activate = Backbone.View.extend({
         $(this.el).removeData().unbind();
         this.remove();
         Backbone.View.prototype.remove.call(this);
-        app.global.activateView = null;
+        delete app.global.views['activate'];
     }
 
 });

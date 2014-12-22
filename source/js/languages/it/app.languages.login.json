@@ -1,6 +1,12 @@
 {
     "type": "login",
     "lang" : "it",
+
+    "title" : "accedi alla tua dashboard personale",
+    "reg_msg" : "è la prima volta che accedi?",
+    "resend_msg" : "hai dimenticato la password?",
+    "login_msg" : "accedi",
+
     "form_messages" : {
         "username": {
             "required": "Campo obbligatorio",

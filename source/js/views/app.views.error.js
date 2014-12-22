@@ -24,7 +24,7 @@ app.views.error = Backbone.View.extend({
         $(this.el).removeData().unbind();
         this.remove();
         Backbone.View.prototype.remove.call(this);
-        app.global.errorView = null;
+        delete app.global.views['error'];
     }
 
 });

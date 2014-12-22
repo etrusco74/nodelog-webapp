@@ -280,6 +280,6 @@ app.views.profile = Backbone.View.extend({
         $(this.el).removeData().unbind();
         this.remove();
         Backbone.View.prototype.remove.call(this);
-        app.global.profileView = null;
+        delete app.global.views['profile'];
     }
 });

@@ -25,7 +25,7 @@ app.views.credits = Backbone.View.extend({
         $(this.el).removeData().unbind();
         this.remove();
         Backbone.View.prototype.remove.call(this);
-        app.global.creditsView = null;
+        delete app.global.views['credits'];
     }
 
 });
