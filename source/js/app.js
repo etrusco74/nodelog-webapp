@@ -119,10 +119,10 @@ app = {
                 var url;
                 switch(this.env) {
                     case'development':
-                        url = 'http://nodelog-c9-etrusco.c9.io/';
+                        url = 'http://nodelognew-etrusco.c9users.io/';
                         break;
                     case'local':
-                        url = 'http://localhost:8080/';
+                        url = 'http://localhost/';
                         break;
                     case 'test':
                         url = 'http://nodelogapp.herokuapp.com/';
