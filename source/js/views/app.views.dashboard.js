@@ -14,8 +14,9 @@ app.views.dashboard = Backbone.View.extend({
 
     /** render template **/
     render: function() {
-        $(this.el).html(this.template());
+        $(this.el).html(this.template(this.language));
         $(document).attr('title', 'nodelog - realtime web analytics | ' + this.language.type + ' | ' + this.language.lang);
+
         return this;
     },
 
@@ -25,49 +26,50 @@ app.views.dashboard = Backbone.View.extend({
 
         var that = this;
 
-        /** start socket.io **/
-        var _client_id = client_id;
+        var i = 1;
+        var name = client_id;;
 
-        /** manage connection **/
         if (app.global.socket === null) {
             /** start connection **/
-            app.global.socket = io.connect('http://nodelognew-etrusco.c9users.io/');
-            //app.global.socket = io.connect('http://localhost:8080');
+            //app.global.socket = io.connect('http://nodelognew-etrusco.c9users.io/');
+            //app.global.socket = io.connect(window.location.hostname);
+            app.global.socket = io.connect(app.const.weburl());
         }
         else {
             location.reload(true);
-            //app.global.socket.emit('change', _client_id);
         }
 
         app.global.socket.on('connect', function () {
-            app.global.socket.emit('create', _client_id);
-            $("#log").prepend('<li><br>Connected to <b>' + _client_id + '</b></li>');
-            $("#con").text(_client_id);
-        });
-
-        app.global.socket.on('disconnected', function() {
-            app.global.socket.emit('disconnect');
+            app.global.socket.emit('identify', name);
+            $("#log").prepend('<li><br>Connected to <b>' + name + '</b></li>');
+            $("#con").text(name);
+            that.stat_renderUaStatCollectionToLabel(name);
+            that.stat_renderPwStatCollectionToLabel(name);
         });
 
         app.global.socket.on('message', function (msg) {
-            $("#log").prepend('<li><small><span class="glyphicon glyphicon-hand-right"></span> ' + JSON.stringify(msg) + '</small></li>');
-            $('#log li:first').hide().fadeIn(2000);
-        });
 
-        app.global.socket.on('update', function (msg) {
-            $("#log").prepend('<li><br>Connected to <b>' + msg + '</b></li>');
-            $("#con").text(msg);
+            $("#log").prepend('<div id="json-'+i+'"><div id="json-obj"></div>');
+            $("#log").prepend('<li><span class="glyphicon glyphicon-hand-right"></span><a href="' + msg.location.href + '" target="_blank"> ' + (msg.location.page == '' ? "home" : msg.location.page) + '</a></li>');
+            $('#log li:first').hide().fadeIn(2000);
+
+            $('#json-'+i).append($('#json-obj').jsonViewer(msg));
+
+            that.stat_renderUaStatCollectionToLabel(name);
+            that.stat_renderPwStatCollectionToLabel(name);
+
+            i++;
         });
 
         app.global.socket.on('num', function (msg) {
             $("#day").text(msg.day);
             $("#pageView").hide().text(msg.pageView).fadeIn(1000);
-            var best = '';
+
+            $('#bestPages li').remove();
             msg.bestPages.forEach(function(json) {
-                best += JSON.stringify(json);
+                var url = "<a href='"+json._id.href+"' target='_blank'>"+(json._id.page == '' ? "home" : json._id.page)+"</a> ("+json.total_view+")"
+                $("#bestPages").append('<li>' + url + '</li>');
             });
-            $('#bestPages li:last').remove();
-            $("#bestPages").append('<li><small><span class="glyphicon glyphicon-hand-right"></span> ' + best + '</small></li>');
 
             var ua = $("#uniqueAccess").text();
             if (ua != msg.uniqueAccess) $("#uniqueAccess").hide().text(msg.uniqueAccess).fadeIn(1000);
@@ -76,6 +78,65 @@ app.views.dashboard = Backbone.View.extend({
         /** end socket.io **/
     },
 
+    /** render stat collection ua to label **/
+    stat_renderUaStatCollectionToLabel: function (client_id) {
+
+        var that = this;
+        var _statsCollection = new app.collections.stats();
+
+        /** get stats **/
+        _statsCollection.fetch({
+            success : function(){
+                if (typeof _statsCollection.models[0].get("_id") !== 'undefined') {
+                    console.log(_statsCollection.models); // => collection have been populated
+                    $('#ua li').remove();
+                    for( var i=0 in _statsCollection.models ) {
+                        var day = _statsCollection.models[i].get("day");
+                        var ua = _statsCollection.models[i].get("uniqueAccess");
+                        var label = 'day: ' +day+ ' -> ' + ua;
+                        $("#ua").prepend('<li>' + label + '</li>');
+                        $('#ua li:first').hide().fadeIn(2000);
+                    }
+                }
+            },
+            error: function(model, response){
+                console.log('error'); // => collection not populated
+            },
+            url: app.const.apiurl() + "stats/daily/ua/7/" + client_id,
+            private: true
+        });
+
+    },
+
+    /** render stat collection pw to label **/
+    stat_renderPwStatCollectionToLabel: function (client_id) {
+
+        var that = this;
+        var _statsCollection = new app.collections.stats();
+
+        /** get stats **/
+        _statsCollection.fetch({
+            success : function(){
+                if (typeof _statsCollection.models[0].get("_id") !== 'undefined') {
+                    console.log(_statsCollection.models); // => collection have been populated
+                    $('#pw li').remove();
+                    for( var i=0 in _statsCollection.models ) {
+                        var day = _statsCollection.models[i].get("day");
+                        var pw = _statsCollection.models[i].get("pageView");
+                        var label = 'day: ' +day+ ' -> ' + pw;
+                        $("#pw").prepend('<li>' + label + '</li>');
+                        $('#pw li:first').hide().fadeIn(2000);
+                    }
+                }
+            },
+            error: function(model, response){
+                console.log('error'); // => collection not populated
+            },
+            url: app.const.apiurl() + "stats/daily/pw/7/" + client_id,
+            private: true
+        });
+
+    },
 
     /** destroy view and unbind all event **/
     destroy_view: function() {

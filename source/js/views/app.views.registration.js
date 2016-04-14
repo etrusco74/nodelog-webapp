@@ -24,7 +24,8 @@ app.views.registration = Backbone.View.extend({
 
     /** render template **/
     render: function() {
-        $(this.el).html(this.template());
+        $(this.el).html(this.template(this.language));
+        $(document).attr('title', 'nodelog - realtime web analytics | ' + this.language.type + ' | ' + this.language.lang);
 
         $.validator.addMethod("check_username", function(value, element) {
             return this.optional(element) || value.match(/^[a-zA-Z0-9._-]+$/);

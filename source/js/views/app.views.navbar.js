@@ -14,7 +14,8 @@ app.views.navbar = Backbone.View.extend({
 
     /** render template **/
     render: function() {
-        $(this.el).html(this.template());
+        $(this.el).html(this.template(this.language));
+        $(document).attr('title', 'nodelog - realtime web analytics | ' + this.language.type + ' | ' + this.language.lang);
 
         this.$('#link_cerca').tooltip();
         this.$('#link_project').tooltip();

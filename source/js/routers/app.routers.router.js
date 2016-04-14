@@ -43,6 +43,7 @@ app.routers.router = Backbone.Router.extend({
         /** load data from localstorage service **/
         app.utils.loadTokens();
         var lang = app.utils.getLanguage();
+
         /** render navbar view **/
         this.navBarContent();
         /** render index view **/

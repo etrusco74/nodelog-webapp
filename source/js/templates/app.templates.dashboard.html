@@ -1,17 +1,34 @@
 <!-- Dashboard -->
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
 
-                <!-- content -->
-                <div class="container">
-                    <h3>connection</h3>
-                    <p>connected to <span id='con' class="text-danger"></span> - day : <span id='day' class="text-danger"></span> - page view : <span id='pageView' class="text-danger">0</span> - unique access : <span id='uniqueAccess' class="text-danger">0</span></p>
-                    <ul id='bestPages' class="list-unstyled"></ul>
-                    <h3>realtime log</h3>
-                    <ul id='log' class="list-unstyled"></ul>
-                </div>
-                <div id="push"></div>
+            <!-- content -->
+            <div class="container">
+                <h3>connection</h3>
+                <p>connected to <span id='con' class="text-danger"></span> - day : <span id='day' class="text-danger"></span> - page view : <span id='pageView' class="text-danger">0</span> - unique access : <span id='uniqueAccess' class="text-danger">0</span></p>
+
+                <h3>today's best pages</h3>
+                <ol id='bestPages'></ol>
+
+                <h3>realtime log</h3>
+                <ul id='log' class="list-unstyled"></ul>
+
+            </div>
+            <div id="push"></div>
+
+        </div>
+        <div class="col-lg-6">
+
+            <!-- content -->
+            <div class="container">
+                <h3>unique access</h3>
+                <ol id='ua'></ol>
+
+                <h3>page view</h3>
+                <ol id='pw'></ol>
+
+            </div>
 
         </div>
     </div>

@@ -14,7 +14,7 @@ app.views.footer = Backbone.View.extend({
 
     /** render template **/
     render: function() {
-        $(this.el).html(this.template());
+        $(this.el).html(this.template(this.language));
 
         this.$('#version').text('V ' + app.const.version);
         return this;

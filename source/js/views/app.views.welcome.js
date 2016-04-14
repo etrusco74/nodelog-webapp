@@ -20,7 +20,12 @@ app.views.welcome = Backbone.View.extend({
 
     /** render template **/
     render: function() {
-        $(this.el).html(this.template({name :  app.global.tokensCollection.at(0).get("first_name")}));
+        /** render dinamic value to template **/
+        var jsonObj = this.language;
+        jsonObj.name = app.global.tokensCollection.at(0).get("first_name");
+        $(this.el).html(this.template(jsonObj));
+        $(document).attr('title', 'nodelog - realtime web analytics | ' + this.language.type + ' | ' + this.language.lang);
+
         return this;
     },
 
