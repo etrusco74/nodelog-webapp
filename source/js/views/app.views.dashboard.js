@@ -31,7 +31,7 @@ app.views.dashboard = Backbone.View.extend({
         /** manage connection **/
         if (app.global.socket === null) {
             /** start connection **/
-            app.global.socket = io.connect(app.const.weburl());
+            app.global.socket = io.connect('http://nodelognew-etrusco.c9users.io/');
             //app.global.socket = io.connect('http://localhost:8080');
         }
         else {
