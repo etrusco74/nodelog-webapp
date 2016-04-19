@@ -43,8 +43,7 @@ app.views.dashboard = Backbone.View.extend({
             app.global.socket.emit('identify', name);
             $("#log").prepend('<li><br>Connected to <b>' + name + '</b></li>');
             $("#con").text(name);
-            that.stat_renderUaStatCollectionToLabel(name);
-            that.stat_renderPwStatCollectionToLabel(name);
+            that.stat_renderStatCollection(name);
         });
 
         app.global.socket.on('message', function (msg) {
@@ -55,8 +54,7 @@ app.views.dashboard = Backbone.View.extend({
 
             $('#json-'+i).append($('#json-obj').jsonViewer(msg));
 
-            that.stat_renderUaStatCollectionToLabel(name);
-            that.stat_renderPwStatCollectionToLabel(name);
+            that.stat_renderStatCollection(name);
 
             i++;
         });
@@ -78,25 +76,85 @@ app.views.dashboard = Backbone.View.extend({
         /** end socket.io **/
     },
 
-    /** render stat collection ua to label **/
-    stat_renderUaStatCollectionToLabel: function (client_id) {
+    /** render stat collection ua and pw to label **/
+    stat_renderStatCollection: function (client_id) {
 
         var that = this;
-        var _statsCollection = new app.collections.stats();
+        var _statsCollectionUa = new app.collections.stats();
+        var _statsCollectionPw = new app.collections.stats();
 
-        /** get stats **/
-        _statsCollection.fetch({
+        /** create jsonObj for hicharts **/
+        var jsonObj = {};
+        var categories = [];
+        var series = [];
+        jsonObj.xAxis = {};
+
+        jsonObj.series = series;
+
+        jsonObj.chart = {type: "column"};
+        jsonObj.title = {text: 'Web site access'};
+        jsonObj.subtitle = {text: 'Unique Access and Page View'};
+        jsonObj.xAxis = {crosshair: true};
+        jsonObj.xAxis.categories = categories;
+
+        var uaObj = {};
+        var pwObj = {};
+        var dataUa = [];
+        var dataPw = [];
+        uaObj.data = dataUa;
+        pwObj.data = dataPw;
+
+        /** get stats ua **/
+        _statsCollectionUa.fetch({
             success : function(){
-                if (typeof _statsCollection.models[0].get("_id") !== 'undefined') {
-                    console.log(_statsCollection.models); // => collection have been populated
+                if (typeof _statsCollectionUa.models[0].get("_id") !== 'undefined') {
+                    console.log(_statsCollectionUa.models); // => collection have been populated
                     $('#ua li').remove();
-                    for( var i=0 in _statsCollection.models ) {
-                        var day = _statsCollection.models[i].get("day");
-                        var ua = _statsCollection.models[i].get("uniqueAccess");
-                        var label = 'day: ' +day+ ' -> ' + ua;
-                        $("#ua").prepend('<li>' + label + '</li>');
-                        $('#ua li:first').hide().fadeIn(2000);
+                    for( var i=0 in _statsCollectionUa.models ) {
+                        var day = _statsCollectionUa.models[i].get("day");
+                        var ua = _statsCollectionUa.models[i].get("uniqueAccess");
+                        //var label = 'day: ' +day+ ' -> ' + ua;
+                        //$("#ua").prepend('<li>' + label + '</li>');
+                        //$('#ua li:first').hide().fadeIn(2000);
+
+                        /** compose jsonObj **/
+                        jsonObj.xAxis.categories.push(day);
+                        uaObj.data.push(ua);
                     }
+                    /** compose jsonObj **/
+                    uaObj.name = "ua";
+                    jsonObj.series.push(uaObj);
+
+                    /** get stats pw **/
+                    _statsCollectionPw.fetch({
+                        success : function(){
+                            if (typeof _statsCollectionPw.models[0].get("_id") !== 'undefined') {
+                                console.log(_statsCollectionPw.models); // => collection have been populated
+                                $('#pw li').remove();
+                                for( var i=0 in _statsCollectionPw.models ) {
+                                    var day = _statsCollectionPw.models[i].get("day");
+                                    var pw = _statsCollectionPw.models[i].get("pageView");
+                                    //var label = 'day: ' +day+ ' -> ' + pw;
+                                    //$("#pw").prepend('<li>' + label + '</li>');
+                                    //$('#pw li:first').hide().fadeIn(2000);
+
+                                    /** compose jsonObj **/
+                                    pwObj.data.push(pw);
+                                }
+                                /** compose jsonObj **/
+                                pwObj.name = "pw";
+                                jsonObj.series.push(pwObj);
+
+                                that.makeGraph(jsonObj);
+                            }
+                        },
+                        error: function(model, response){
+                            console.log('error'); // => collection not populated
+                        },
+                        url: app.const.apiurl() + "stats/daily/pw/7/" + client_id,
+                        private: true
+                    });
+
                 }
             },
             error: function(model, response){
@@ -108,34 +166,11 @@ app.views.dashboard = Backbone.View.extend({
 
     },
 
-    /** render stat collection pw to label **/
-    stat_renderPwStatCollectionToLabel: function (client_id) {
-
-        var that = this;
-        var _statsCollection = new app.collections.stats();
-
-        /** get stats **/
-        _statsCollection.fetch({
-            success : function(){
-                if (typeof _statsCollection.models[0].get("_id") !== 'undefined') {
-                    console.log(_statsCollection.models); // => collection have been populated
-                    $('#pw li').remove();
-                    for( var i=0 in _statsCollection.models ) {
-                        var day = _statsCollection.models[i].get("day");
-                        var pw = _statsCollection.models[i].get("pageView");
-                        var label = 'day: ' +day+ ' -> ' + pw;
-                        $("#pw").prepend('<li>' + label + '</li>');
-                        $('#pw li:first').hide().fadeIn(2000);
-                    }
-                }
-            },
-            error: function(model, response){
-                console.log('error'); // => collection not populated
-            },
-            url: app.const.apiurl() + "stats/daily/pw/7/" + client_id,
-            private: true
-        });
-
+    /** destroy view and unbind all event **/
+    makeGraph: function(jsonObj) {
+        var chart = $('#graph').highcharts(jsonObj);
+        chart.reflow();
+        console.log(jsonObj);
     },
 
     /** destroy view and unbind all event **/
