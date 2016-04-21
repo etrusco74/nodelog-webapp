@@ -169,8 +169,8 @@ app.views.dashboard = Backbone.View.extend({
     /** destroy view and unbind all event **/
     makeGraph: function(jsonObj) {
         var chart = $('#graph').highcharts(jsonObj);
-        chart.reflow();
-        console.log(jsonObj);
+        //chart.reflow();
+        console.log(JSON.stringify(jsonObj));
     },
 
     /** destroy view and unbind all event **/
