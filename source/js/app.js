@@ -111,10 +111,10 @@ app = {
 
         /** app config **/
         const: {
-            env : 'development',
+            //env : 'development',
             //env : 'local',
             //env : 'test',
-            //env : 'production',
+            env : 'production',
             weburl : function() {
                 var url;
                 switch(this.env) {
