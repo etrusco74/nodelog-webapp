@@ -12,22 +12,29 @@ app.views.dashboard = Backbone.View.extend({
         console.log('initializing dashboard view');
     },
 
+    /** submit event for registration **/
+    events: {
+        'change #statDay':       'stat_renderStatCollection'
+    },
+
     /** render template **/
     render: function() {
         $(this.el).html(this.template(this.language));
         $(document).attr('title', 'nodelog - realtime web analytics | ' + this.language.type + ' | ' + this.language.lang);
+
+        this.init_socket();
 
         return this;
     },
 
 
     /** init socket.io - important: after template rendering **/
-    init_socket: function (client_id) {
+    init_socket: function () {
 
         var that = this;
 
         var i = 1;
-        var name = client_id;;
+        var name = app.global.client_id;
 
         if (app.global.socket === null) {
             /** start connection **/
@@ -60,14 +67,19 @@ app.views.dashboard = Backbone.View.extend({
         });
 
         app.global.socket.on('num', function (msg) {
+            var numRows= that.$('#numRows').val() == "" ? 10 : that.$('#numRows').val();
             $("#day").text(msg.day);
             $("#pageView").hide().text(msg.pageView).fadeIn(1000);
 
             $('#bestPages li').remove();
-            msg.bestPages.forEach(function(json) {
-                var url = "<a href='"+json._id.href+"' target='_blank'>"+(json._id.page == '' ? "home" : json._id.page)+"</a> ("+json.total_view+")"
+            //msg.bestPages.forEach(function(json) {
+            for (index = 0, len = msg.bestPages.length; index < numRows; ++index) {
+                //var url = "<a href='" + json._id.href + "' target='_blank'>" + (json._id.page == '' ? "home" : json._id.page) + "</a> (" + json.total_view + ")"
+                var url = "<a href='" + msg.bestPages[index]._id.href + "' target='_blank'>" + (msg.bestPages[index]._id.page == '' ? "home" : msg.bestPages[index]._id.page) + "</a> (" + msg.bestPages[index].total_view + ")"
+
                 $("#bestPages").append('<li>' + url + '</li>');
-            });
+            }
+            //});
 
             var ua = $("#uniqueAccess").text();
             if (ua != msg.uniqueAccess) $("#uniqueAccess").hide().text(msg.uniqueAccess).fadeIn(1000);
@@ -77,9 +89,11 @@ app.views.dashboard = Backbone.View.extend({
     },
 
     /** render stat collection ua and pw to label **/
-    stat_renderStatCollection: function (client_id) {
+    stat_renderStatCollection: function () {
 
         var that = this;
+        var statDay = that.$('#statDay').val() == "" ? 7 : that.$('#statDay').val();
+
         var _statsCollectionUa = new app.collections.stats();
         var _statsCollectionPw = new app.collections.stats();
 
@@ -91,7 +105,7 @@ app.views.dashboard = Backbone.View.extend({
 
         jsonObj.series = series;
 
-        jsonObj.chart = {type: "column"};
+        jsonObj.chart = {type: "line"};
         jsonObj.title = {text: 'Web site access'};
         jsonObj.subtitle = {text: 'Unique Access and Page View'};
         jsonObj.xAxis = {crosshair: true};
@@ -151,7 +165,7 @@ app.views.dashboard = Backbone.View.extend({
                         error: function(model, response){
                             console.log('error'); // => collection not populated
                         },
-                        url: app.const.apiurl() + "stats/daily/pw/7/" + client_id,
+                        url: app.const.apiurl() + "stats/daily/pw/" + statDay + "/" + app.global.client_id,
                         private: true
                     });
 
@@ -160,7 +174,7 @@ app.views.dashboard = Backbone.View.extend({
             error: function(model, response){
                 console.log('error'); // => collection not populated
             },
-            url: app.const.apiurl() + "stats/daily/ua/7/" + client_id,
+            url: app.const.apiurl() + "stats/daily/ua/" + statDay + "/" + app.global.client_id,
             private: true
         });
 

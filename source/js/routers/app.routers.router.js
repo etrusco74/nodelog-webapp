@@ -249,6 +249,8 @@ app.routers.router = Backbone.Router.extend({
             this.index();
         }
         else {
+
+            app.global.client_id = client_id;
             /** render navbar view **/
             this.navBarContent();
             /** render dashboard view **/
@@ -257,8 +259,6 @@ app.routers.router = Backbone.Router.extend({
             $('#content').html(app.global.views['dashboard'].el);
             /** render footer view **/
             this.footerContent();
-
-            app.global.views['dashboard'].init_socket(client_id);
 
             this.navigate('#!' + lang + '/dashboard/' + client_id, { trigger : false });
         }
