@@ -83,6 +83,8 @@ app.views.dashboard = Backbone.View.extend({
 
             var ua = $("#uniqueAccess").text();
             if (ua != msg.uniqueAccess) $("#uniqueAccess").hide().text(msg.uniqueAccess).fadeIn(1000);
+
+            $("#totalPage").hide().text(msg.totalPage).fadeIn(1000);
         });
 
         /** end socket.io **/
