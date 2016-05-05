@@ -292,7 +292,7 @@ app.views.site = Backbone.View.extend({
                               "<script type='text/javascript'>\n" +
                               "nodelog_clientid = '"+model.get("client_id")+"';\n" +
                               "</script>\n" +
-                              "<script type='text/javascript' src='" + app.const.weburl() + "/js/n.js?v=001'></script>\n" +
+                              "<script type='text/javascript' src='" + app.const.weburl() + "js/n.js?v=001'></script>\n" +
                               "<!-- end node log -->";
 
                     $('#tracking').val(str);

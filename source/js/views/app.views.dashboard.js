@@ -34,60 +34,100 @@ app.views.dashboard = Backbone.View.extend({
         var that = this;
 
         var i = 1;
-        var name = app.global.client_id;
+        var tag = '';
+        var client_id = '';
 
-        if (app.global.socket === null) {
-            /** start connection **/
-            //app.global.socket = io.connect('http://nodelognew-etrusco.c9users.io/');
-            //app.global.socket = io.connect(window.location.hostname);
-            app.global.socket = io.connect(app.const.weburl());
-        }
-        else {
-            location.reload(true);
-        }
+        /** get model site **/
 
-        app.global.socket.on('connect', function () {
-            app.global.socket.emit('identify', name);
-            $("#log").prepend('<li><br>Connected to <b>' + name + '</b></li>');
-            $("#con").text(name);
-            that.stat_renderStatCollection(name);
+        var _siteModel = new app.models.site();
+
+        /** GET SITE MODEL **/
+        _siteModel.fetch({
+            success: function (model) {
+
+                if (typeof model.get("_id") !== 'undefined') {
+                    //model.get("_id");
+                    client_id = model.get("client_id");
+                    tag = model.get("tag");
+                    //model.get("website");
+                    console.log(model);
+
+                    /** ok site **/
+                    if (app.global.socket === null) {
+                        /** start connection **/
+                        app.global.socket = io.connect(app.const.weburl());
+                    }
+                    else {
+                        location.reload(true);
+                    }
+
+                    app.global.socket.on('connect', function () {
+                        app.global.socket.emit('identify', client_id);
+                        $("#log").prepend('<li><br>Connected to <b>' + tag + '</b></li>');
+                        $("#con").text(tag);
+                        that.stat_renderStatCollection();
+                    });
+
+                    app.global.socket.on('message', function (msg) {
+
+                        $("#log").prepend('<div id="json-'+i+'"><div id="json-obj"></div>');
+                        $("#log").prepend('<li><span class="glyphicon glyphicon-hand-right"></span><a href="' + msg.location.href + '" target="_blank"> ' + (msg.location.page == '' ? "home" : msg.location.page) + '</a></li>');
+                        $('#log li:first').hide().fadeIn(2000);
+
+                        $('#json-'+i).append($('#json-obj').jsonViewer(msg));
+
+                        that.stat_renderStatCollection();
+
+                        i++;
+                    });
+
+                    app.global.socket.on('num', function (msg) {
+                        var numRows= that.$('#numRows').val() == "" ? 10 : that.$('#numRows').val();
+                        $("#day").text(msg.day);
+                        $("#pageView").hide().text(msg.pageView).fadeIn(1000);
+
+                        $('#bestPages li').remove();
+                        for (index = 0, len = msg.bestPages.length; index < numRows; ++index) {
+                            //var url = "<a href='" + json._id.href + "' target='_blank'>" + (json._id.page == '' ? "home" : json._id.page) + "</a> (" + json.total_view + ")"
+                            var url = "<a href='" + msg.bestPages[index]._id.href + "' target='_blank'>" + (msg.bestPages[index]._id.page == '' ? "home" : msg.bestPages[index]._id.page) + "</a> (" + msg.bestPages[index].total_view + ")"
+
+                            $("#bestPages").append('<li>' + url + '</li>');
+                        }
+
+
+                        var ua = $("#uniqueAccess").text();
+                        if (ua != msg.uniqueAccess) $("#uniqueAccess").hide().text(msg.uniqueAccess).fadeIn(1000);
+
+                        $("#totalPage").hide().text(msg.totalPage).fadeIn(1000);
+                    });
+
+                }
+                else {
+                    if (!model.get("success"))
+                        app.routers.router.prototype.logout();
+                }
+            },
+            error: function(response){
+                bootbox.dialog({
+                    title: that.language.error_message,
+                    message: that.language.error_message,
+                    buttons: {
+                        main: {
+                            label: that.language.label_button,
+                            className: "btn btn-danger",
+                            callback: function() {
+                                $("body").removeClass("modal-open");
+                            }
+                        }
+                    }
+                });
+                console.log(response);
+            },
+            url: app.const.apiurl() + 'site/client_id/' + app.global.client_id,
+            private: true
         });
 
-        app.global.socket.on('message', function (msg) {
-
-            $("#log").prepend('<div id="json-'+i+'"><div id="json-obj"></div>');
-            $("#log").prepend('<li><span class="glyphicon glyphicon-hand-right"></span><a href="' + msg.location.href + '" target="_blank"> ' + (msg.location.page == '' ? "home" : msg.location.page) + '</a></li>');
-            $('#log li:first').hide().fadeIn(2000);
-
-            $('#json-'+i).append($('#json-obj').jsonViewer(msg));
-
-            that.stat_renderStatCollection(name);
-
-            i++;
-        });
-
-        app.global.socket.on('num', function (msg) {
-            var numRows= that.$('#numRows').val() == "" ? 10 : that.$('#numRows').val();
-            $("#day").text(msg.day);
-            $("#pageView").hide().text(msg.pageView).fadeIn(1000);
-
-            $('#bestPages li').remove();
-            //msg.bestPages.forEach(function(json) {
-            for (index = 0, len = msg.bestPages.length; index < numRows; ++index) {
-                //var url = "<a href='" + json._id.href + "' target='_blank'>" + (json._id.page == '' ? "home" : json._id.page) + "</a> (" + json.total_view + ")"
-                var url = "<a href='" + msg.bestPages[index]._id.href + "' target='_blank'>" + (msg.bestPages[index]._id.page == '' ? "home" : msg.bestPages[index]._id.page) + "</a> (" + msg.bestPages[index].total_view + ")"
-
-                $("#bestPages").append('<li>' + url + '</li>');
-            }
-            //});
-
-            var ua = $("#uniqueAccess").text();
-            if (ua != msg.uniqueAccess) $("#uniqueAccess").hide().text(msg.uniqueAccess).fadeIn(1000);
-
-            $("#totalPage").hide().text(msg.totalPage).fadeIn(1000);
-        });
-
-        /** end socket.io **/
+        /** end init socket.io **/
     },
 
     /** render stat collection ua and pw to label **/
@@ -199,10 +239,7 @@ app.views.dashboard = Backbone.View.extend({
                         url: app.const.apiurl() + "stats/daily/pw/" + statDay + "/" + app.global.client_id,
                         private: true
                     });
-
                 }
-                else
-                    app.routers.router.prototype.logout();
             },
             error: function(model, response){
                 console.log('error'); // => collection not populated

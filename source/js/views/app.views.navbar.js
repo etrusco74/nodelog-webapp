@@ -36,9 +36,54 @@ app.views.navbar = Backbone.View.extend({
         else {
             this.$('#ul_login').hide();
             this.$('#ul_logout').show();
+
+            this.site_renderSitesCollectionToUl();
         }
         return this;
     },
+
+    /** render previous site model data to ul **/
+    site_renderSitesCollectionToUl: function () {
+
+        var that = this;
+        var _sitesCollection = new app.collections.sites();
+
+        /** GET SITES **/
+        _sitesCollection.fetch({
+            success : function(){
+                if (typeof _sitesCollection.models[0].get("_id") !== 'undefined') {
+                    console.log(_sitesCollection.models); // => collection have been populated
+                    $('#siteListNav li').remove();
+                    for( var i=0 in _sitesCollection.models ) {
+                        $('#siteListNav').append('<li><a href="#' + that.language.lang	 + '/dashboard/' + _sitesCollection.models[i].get("client_id") + '" id="' + _sitesCollection.models[i].get("_id") + '"> ' + _sitesCollection.models[i].get("tag") + '</a></li>');
+                    }
+                }
+                else {
+                    $('#siteList li').remove();
+                    $('#siteList').append('<li>' + that.language.no_site_desc + '</li>');
+                }
+            },
+            error: function(model, response){
+                bootbox.dialog({
+                    title: that.language.error_message_type,
+                    message: that.language.error_message_type,
+                    buttons: {
+                        main: {
+                            label: that.language.label_button,
+                            className: "btn btn-danger",
+                            callback: function() {
+                                $("body").removeClass("modal-open");
+                            }
+                        }
+                    }
+                });
+            },
+            url: app.const.apiurl() + "sites/username/" + app.global.tokensCollection.at(0).get("username"),
+            private: true
+        });
+
+    },
+
 
     /** destroy view and unbind all event **/
     destroy_view: function() {
