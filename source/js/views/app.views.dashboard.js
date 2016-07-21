@@ -88,9 +88,8 @@ app.views.dashboard = Backbone.View.extend({
 
                         $('#bestPages li').remove();
                         for (index = 0, len = msg.bestPages.length; index < numRows; ++index) {
-                            //var url = "<a href='" + json._id.href + "' target='_blank'>" + (json._id.page == '' ? "home" : json._id.page) + "</a> (" + json.total_view + ")"
-                            var url = "<a href='" + msg.bestPages[index]._id.href + "' target='_blank'>" + (msg.bestPages[index]._id.page == '' ? "home" : msg.bestPages[index]._id.page) + "</a> (" + msg.bestPages[index].total_view + ")"
-
+                            var perc = Math.floor((msg.bestPages[index].total_view / msg.pageView) * 100);
+                            var url = "<a href='" + msg.bestPages[index]._id.href + "' target='_blank'>" + (msg.bestPages[index]._id.page == '' ? "home" : msg.bestPages[index]._id.page) + "</a> - " + msg.bestPages[index].total_view + " ("+perc+"%)"
                             $("#bestPages").append('<li>' + url + '</li>');
                         }
 
@@ -140,6 +139,8 @@ app.views.dashboard = Backbone.View.extend({
         var _statsCollectionPw = new app.collections.stats();
         var _statsCollectionTp = new app.collections.stats();
 
+        var _statsCollection = new app.collections.stats();
+
         /** create jsonObj for hicharts **/
         var jsonObj = {};
         var categories = [];
@@ -166,85 +167,54 @@ app.views.dashboard = Backbone.View.extend({
         pwObj.data = dataPw;
         tpObj.data = dataTp;
 
-        /** get stats ua **/
-        _statsCollectionUa.fetch({
+
+        /** get stats tp **/
+        _statsCollection.fetch({
             success : function(){
-                if (typeof _statsCollectionUa.models[0].get("_id") !== 'undefined') {
-                    console.log(_statsCollectionUa.models); // => collection have been populated
+                if (typeof _statsCollection.models[0].get("_id") !== 'undefined') {
+                    console.log(_statsCollection.models); // => collection have been populated
+
                     $('#ua li').remove();
-                    for( var i=0 in _statsCollectionUa.models ) {
-                        var day = _statsCollectionUa.models[i].get("day");
-                        var ua = _statsCollectionUa.models[i].get("uniqueAccess");
+                    $('#pw li').remove();
+                    $('#tp li').remove();
+
+                    for( var i=0 in _statsCollection.models ) {
+
+                        var day = _statsCollection.models[i].get("day");
+                        var ua, pw, tp = 0;
+
+                        if (typeof _statsCollection.models[i].get("uniqueAccess") !== 'undefined')
+                            ua = _statsCollection.models[i].get("uniqueAccess");
+
+                        if (typeof _statsCollection.models[i].get("pageView") !== 'undefined')
+                            pw = _statsCollection.models[i].get("pageView");
+
+                        if (typeof _statsCollection.models[i].get("totalPage") !== 'undefined')
+                            tp = _statsCollection.models[i].get("totalPage");
 
                         /** compose jsonObj **/
                         jsonObj.xAxis.categories.push(day);
                         uaObj.data.push(ua);
+                        pwObj.data.push(pw);
+                        tpObj.data.push(tp);
                     }
+
                     /** compose jsonObj **/
                     uaObj.name = "unique access";
+                    pwObj.name = "page view";
+                    tpObj.name = "total page";
+
                     jsonObj.series.push(uaObj);
+                    jsonObj.series.push(pwObj);
+                    jsonObj.series.push(tpObj);
 
-                    /** get stats pw **/
-                    _statsCollectionPw.fetch({
-                        success : function(){
-                            if (typeof _statsCollectionPw.models[0].get("_id") !== 'undefined') {
-                                console.log(_statsCollectionPw.models); // => collection have been populated
-                                $('#pw li').remove();
-                                for( var i=0 in _statsCollectionPw.models ) {
-                                    var day = _statsCollectionPw.models[i].get("day");
-                                    var pw = _statsCollectionPw.models[i].get("pageView");
-
-
-                                    /** compose jsonObj **/
-                                    pwObj.data.push(pw);
-                                }
-                                /** compose jsonObj **/
-                                pwObj.name = "page view";
-                                jsonObj.series.push(pwObj);
-
-                                /** get stats tp **/
-                                _statsCollectionTp.fetch({
-                                    success : function(){
-                                        if (typeof _statsCollectionTp.models[0].get("_id") !== 'undefined') {
-                                            console.log(_statsCollectionTp.models); // => collection have been populated
-                                            $('#tp li').remove();
-                                            for( var i=0 in _statsCollectionTp.models ) {
-                                                var day = _statsCollectionTp.models[i].get("day");
-                                                var tp = 0;
-                                                if (typeof _statsCollectionTp.models[i].get("totalPage") !== 'undefined')
-                                                    tp = _statsCollectionTp.models[i].get("totalPage");
-
-                                                /** compose jsonObj **/
-                                                tpObj.data.push(tp);
-                                            }
-                                            /** compose jsonObj **/
-                                            tpObj.name = "total page";
-                                            jsonObj.series.push(tpObj);
-
-                                            that.makeGraph(jsonObj);
-                                        }
-                                    },
-                                    error: function(model, response){
-                                        console.log('error'); // => collection not populated
-                                    },
-                                    url: app.const.apiurl() + "stats/daily/tp/" + statDay + "/" + app.global.client_id,
-                                    private: true
-                                });
-
-                            }
-                        },
-                        error: function(model, response){
-                            console.log('error'); // => collection not populated
-                        },
-                        url: app.const.apiurl() + "stats/daily/pw/" + statDay + "/" + app.global.client_id,
-                        private: true
-                    });
+                    that.makeGraph(jsonObj);
                 }
             },
             error: function(model, response){
                 console.log('error'); // => collection not populated
             },
-            url: app.const.apiurl() + "stats/daily/ua/" + statDay + "/" + app.global.client_id,
+            url: app.const.apiurl() + "stats/daily/" + statDay + "/" + app.global.client_id,
             private: true
         });
 
