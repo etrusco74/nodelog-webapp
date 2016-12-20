@@ -14,7 +14,8 @@ app.views.dashboard = Backbone.View.extend({
 
     /** submit event for registration **/
     events: {
-        'change #statDay':       'stat_renderStatCollection'
+        'change #statDay':              'stat_renderStatCollection',
+        'change input[type=radio]':     'stat_renderStatPageCollection'
     },
 
     /** render template **/
@@ -66,6 +67,7 @@ app.views.dashboard = Backbone.View.extend({
                         $("#log").prepend('<li><br>Connected to <b>' + tag + '</b></li>');
                         $("#con").text(tag);
                         that.stat_renderStatCollection();
+                        that.stat_renderStatPageCollection();
                     });
 
                     app.global.socket.on('message', function (msg) {
@@ -77,6 +79,7 @@ app.views.dashboard = Backbone.View.extend({
                         $('#json-'+i).append($('#json-obj').jsonViewer(msg));
 
                         that.stat_renderStatCollection();
+                        that.stat_renderStatPageCollection();
 
                         i++;
                     });
@@ -90,9 +93,8 @@ app.views.dashboard = Backbone.View.extend({
                         for (index = 0, len = msg.bestPages.length; index < numRows; ++index) {
                             var perc = Math.floor((msg.bestPages[index].total_view / msg.pageView) * 100);
                             var url = "<a href='" + msg.bestPages[index]._id.href + "' target='_blank'>" + (msg.bestPages[index]._id.page == '' ? "home" : msg.bestPages[index]._id.page) + "</a> - " + msg.bestPages[index].total_view + " ("+perc+"%)"
-                            $("#bestPages").append('<li>' + url + '</li>');
+                            $("#bestPages").append('<li><input type="radio" name="pageradio" value="'+msg.bestPages[index]._id.page+'"></radio> ' + url + '</li>');
                         }
-
 
                         var ua = $("#uniqueAccess").text();
                         if (ua != msg.uniqueAccess) $("#uniqueAccess").hide().text(msg.uniqueAccess).fadeIn(1000);
@@ -220,9 +222,81 @@ app.views.dashboard = Backbone.View.extend({
 
     },
 
+    /** render stat collection for single page **/
+    stat_renderStatPageCollection: function () {
+
+        var that = this;
+        var statDay = that.$('#statDay').val() == "" ? 7 : that.$('#statDay').val();
+        var statPage = that.$('input[name=pageradio]:checked').val();
+
+        var _statsCollection = new app.collections.stats();
+
+        /** create jsonObj for hicharts **/
+        var jsonObj = {};
+        var categories = [];
+        var series = [];
+        jsonObj.xAxis = {};
+
+        jsonObj.series = series;
+
+        jsonObj.chart = {type: "line"};
+        jsonObj.title = {text: 'Single page view'};
+        jsonObj.subtitle = {text: statPage};
+        jsonObj.xAxis = {crosshair: true};
+        jsonObj.xAxis.categories = categories;
+
+        var pwObj = {};
+        var dataPw = [];
+        pwObj.data = dataPw;
+
+        /** get stats tp **/
+        _statsCollection.fetch({
+            success : function(){
+                if (typeof _statsCollection.models[0].get("_id") !== 'undefined') {
+                    console.log(_statsCollection.models); // => collection have been populated
+
+                    $('#pw li').remove();
+
+                    for( var i=0 in _statsCollection.models ) {
+
+                        var day = _statsCollection.models[i].get("day");
+                        var pw = 0;
+
+                        if (typeof _statsCollection.models[i].get("bestPages") !== 'undefined')
+                            pw = _statsCollection.models[i].get("bestPages")[0].total_view;
+
+                        /** compose jsonObj **/
+                        jsonObj.xAxis.categories.push(day);
+                        pwObj.data.push(pw);
+                    }
+
+                    /** compose jsonObj **/
+                    pwObj.name = "page view";
+
+                    jsonObj.series.push(pwObj);
+
+                    that.makeGraphPage(jsonObj);
+                }
+            },
+            error: function(model, response){
+                console.log('error'); // => collection not populated
+            },
+            url: app.const.apiurl() + "stats/daily/bp/" + statDay + "/" + app.global.client_id + "/" + statPage,
+            private: true
+        });
+
+    },
+
     /** destroy view and unbind all event **/
     makeGraph: function(jsonObj) {
         var chart = $('#graph').highcharts(jsonObj);
+        //chart.reflow();
+        console.log(JSON.stringify(jsonObj));
+    },
+
+    /** destroy view and unbind all event **/
+    makeGraphPage: function(jsonObj) {
+        var chartPage = $('#graph-page').highcharts(jsonObj);
         //chart.reflow();
         console.log(JSON.stringify(jsonObj));
     },
