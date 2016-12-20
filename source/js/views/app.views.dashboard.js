@@ -85,7 +85,7 @@ app.views.dashboard = Backbone.View.extend({
                     });
 
                     app.global.socket.on('num', function (msg) {
-                        var numRows= that.$('#numRows').val() == "" ? 10 : that.$('#numRows').val();
+                        var numRows= that.$('#numRows').val() == "" ? 30 : that.$('#numRows').val();
                         $("#day").text(msg.day);
                         $("#pageView").hide().text(msg.pageView).fadeIn(1000);
 
@@ -93,7 +93,11 @@ app.views.dashboard = Backbone.View.extend({
                         for (index = 0, len = msg.bestPages.length; index < numRows; ++index) {
                             var perc = Math.floor((msg.bestPages[index].total_view / msg.pageView) * 100);
                             var url = "<a href='" + msg.bestPages[index]._id.href + "' target='_blank'>" + (msg.bestPages[index]._id.page == '' ? "home" : msg.bestPages[index]._id.page) + "</a> - " + msg.bestPages[index].total_view + " ("+perc+"%)"
-                            $("#bestPages").append('<li><input type="radio" name="pageradio" value="'+msg.bestPages[index]._id.page+'"></radio> ' + url + '</li>');
+
+                            if (app.global.single_page == msg.bestPages[index]._id.page)
+                                $("#bestPages").append('<li><input type="radio" name="pageradio" checked value="'+msg.bestPages[index]._id.page+'"></radio> ' + url + '</li>');
+                            else
+                                $("#bestPages").append('<li><input type="radio" name="pageradio" value="'+msg.bestPages[index]._id.page+'"></radio> ' + url + '</li>');
                         }
 
                         var ua = $("#uniqueAccess").text();
@@ -228,6 +232,7 @@ app.views.dashboard = Backbone.View.extend({
         var that = this;
         var statDay = that.$('#statDay').val() == "" ? 7 : that.$('#statDay').val();
         var statPage = that.$('input[name=pageradio]:checked').val();
+        app.global.single_page = statPage;
 
         var _statsCollection = new app.collections.stats();
 

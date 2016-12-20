@@ -142,6 +142,7 @@ app = {
         global: {
             socket : null,
             client_id: null,
+            single_page: '',
             default_language : function(){
                 var lang = window.navigator.userLanguage || window.navigator.language;
                 lang = lang.substring(0,2);
