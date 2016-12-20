@@ -135,7 +135,7 @@ app = {
             apiurl : function() {
                 return this.weburl() + 'api/';
             },
-            version : '0.0.1'
+            version : '0.0.2'
         },
 
         /** app global var **/
