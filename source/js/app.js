@@ -128,15 +128,16 @@ app = {
                         url = 'http://nodelogapp.herokuapp.com/';
                         break;
                     default:
-                        url = 'http://nodelogapp.herokuapp.com/';
+                        url = location.protocol + '//' + location.hostname + '/';
                 }
                 return url;
             },
             apiurl : function() {
                 return this.weburl() + 'api/';
             },
-            version : '0.0.2'
+            version : '0.0.3'
         },
+        
 
         /** app global var **/
         global: {
