@@ -143,6 +143,7 @@ app.views.registration = Backbone.View.extend({
         jsonObj.username = this.$('#username').val();
         jsonObj.password = this.$('#password').val();
         jsonObj.email = this.$('#email').val();
+        jsonObj.token = this.$('#token').val();
         return jsonObj;
     },
 
