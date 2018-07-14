@@ -23,125 +23,126 @@
 
 <body>
 
-    <noscript>
-        &nbsp;&nbsp;I'm sorry, nodelog require <b>javascript enabled</b>
-    </noscript>
+<noscript>
+    &nbsp;&nbsp;I'm sorry, nodelog require <b>javascript enabled</b>
+</noscript>
 
-    <!-- page content -->
-    <div id="wrap">
+<!-- page content -->
+<div id="wrap">
 
-        <!-- navbar -->
-        <div id="navbar_content"></div>
+    <!-- navbar -->
+    <div id="navbar_content"></div>
 
-        <!-- content -->
-        <div id="content"></div>
+    <!-- content -->
+    <div id="content"></div>
 
-        <!-- push content -->
-        <div id="push"></div>
+    <!-- push content -->
+    <div id="push"></div>
 
-    </div>
+</div>
 
-    <!-- footer -->
-    <div id="footer_content"></div>
+<!-- footer -->
+<div id="footer_content"></div>
 
-    <!-- all javascript library
-    ================================================== -->
-    <!-- js ext library -->
-    <script type="text/javascript" src="js/lib/jquery-1.9.1.min.js"></script>
-    <script src="http://nodelogapp.herokuapp.com/socket.io/socket.io.js"></script>
-    <script type="text/javascript" src="js/lib/underscore-1.4.4.min.js"></script>
-    <script type="text/javascript" src="js/lib/backbone-1.0.0.min.js"></script>
-    <script type="text/javascript" src="js/lib/backbone.localStorage.min.js"></script>
-    <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/lib/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="js/lib/md5.js"></script>
-    <script type="text/javascript" src="js/lib/moment-langs.min.js"></script>
-    <script type="text/javascript" src="js/lib/bootbox.min.js"></script>
-    <script type="text/javascript" src="js/lib/jsonviewer.js"></script>
-    <script type="text/javascript" src="js/lib/highcharts.js"></script>
-    <script type="text/javascript" src="js/lib/exporting.js"></script>
-    <!-- app -->
-    <script type="text/javascript" src="js/app.js"></script>
-    <!-- router -->
-    <script type="text/javascript" src="js/routers/app.routers.router.js"></script>
-    <!-- model -->
-    <script type="text/javascript" src="js/models/app.models.site.js"></script>
-    <script type="text/javascript" src="js/models/app.models.language.js"></script>
-    <script type="text/javascript" src="js/models/app.models.token.js"></script>
-    <script type="text/javascript" src="js/models/app.models.user.js"></script>
-    <script type="text/javascript" src="js/models/app.models.stat.js"></script>
-    <!-- collection -->
-    <script type="text/javascript" src="js/collections/app.collections.sites.js"></script>
-    <script type="text/javascript" src="js/collections/app.collections.languages.js"></script>
-    <script type="text/javascript" src="js/collections/app.collections.tokens.js"></script>
-    <script type="text/javascript" src="js/collections/app.collections.users.js"></script>
-    <script type="text/javascript" src="js/collections/app.collections.stats.js"></script>
-    <!-- view -->
-    <script type="text/javascript" src="js/views/app.views.index.js"></script>
-    <script type="text/javascript" src="js/views/app.views.login.js"></script>
-    <script type="text/javascript" src="js/views/app.views.registration.js"></script>
-    <script type="text/javascript" src="js/views/app.views.welcome.js"></script>
-    <script type="text/javascript" src="js/views/app.views.profile.js"></script>
-    <script type="text/javascript" src="js/views/app.views.site.js"></script>
-    <script type="text/javascript" src="js/views/app.views.navbar.js"></script>
-    <script type="text/javascript" src="js/views/app.views.footer.js"></script>
-    <script type="text/javascript" src="js/views/app.views.credits.js"></script>
-    <script type="text/javascript" src="js/views/app.views.project.js"></script>
-    <script type="text/javascript" src="js/views/app.views.password.js"></script>
-    <script type="text/javascript" src="js/views/app.views.dashboard.js"></script>
-    <script type="text/javascript" src="js/views/app.views.resend.js"></script>
-    <script type="text/javascript" src="js/views/app.views.activate.js"></script>
-    <script type="text/javascript" src="js/views/app.views.error.js"></script>
-    <script type="text/javascript" src="js/views/app.views.adlarge.js"></script>
-    <script type="text/javascript" src="js/views/app.views.admedium.js"></script>
-    <script type="text/javascript" src="js/views/app.views.adsmall.js"></script>
+<!-- all javascript library
+================================================== -->
+<!-- js ext library -->
+<script type="text/javascript" src="js/lib/jquery-1.9.1.min.js"></script>
+<!-- <script type="text/javascript" src="http://nodelogapp.herokuapp.com/socket.io/socket.io.js"></script> -->
+<script type="text/javascript" src="socket.io/socket.io.js"></script>
+<script type="text/javascript" src="js/lib/underscore-1.4.4.min.js"></script>
+<script type="text/javascript" src="js/lib/backbone-1.0.0.min.js"></script>
+<script type="text/javascript" src="js/lib/backbone.localStorage.min.js"></script>
+<script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/lib/jquery.validate.min.js"></script>
+<script type="text/javascript" src="js/lib/md5.js"></script>
+<script type="text/javascript" src="js/lib/moment-langs.min.js"></script>
+<script type="text/javascript" src="js/lib/bootbox.min.js"></script>
+<script type="text/javascript" src="js/lib/jsonviewer.js"></script>
+<script type="text/javascript" src="js/lib/highcharts.js"></script>
+<script type="text/javascript" src="js/lib/exporting.js"></script>
+<!-- app -->
+<script type="text/javascript" src="js/app.js"></script>
+<!-- router -->
+<script type="text/javascript" src="js/routers/app.routers.router.js"></script>
+<!-- model -->
+<script type="text/javascript" src="js/models/app.models.site.js"></script>
+<script type="text/javascript" src="js/models/app.models.language.js"></script>
+<script type="text/javascript" src="js/models/app.models.token.js"></script>
+<script type="text/javascript" src="js/models/app.models.user.js"></script>
+<script type="text/javascript" src="js/models/app.models.stat.js"></script>
+<!-- collection -->
+<script type="text/javascript" src="js/collections/app.collections.sites.js"></script>
+<script type="text/javascript" src="js/collections/app.collections.languages.js"></script>
+<script type="text/javascript" src="js/collections/app.collections.tokens.js"></script>
+<script type="text/javascript" src="js/collections/app.collections.users.js"></script>
+<script type="text/javascript" src="js/collections/app.collections.stats.js"></script>
+<!-- view -->
+<script type="text/javascript" src="js/views/app.views.index.js"></script>
+<script type="text/javascript" src="js/views/app.views.login.js"></script>
+<script type="text/javascript" src="js/views/app.views.registration.js"></script>
+<script type="text/javascript" src="js/views/app.views.welcome.js"></script>
+<script type="text/javascript" src="js/views/app.views.profile.js"></script>
+<script type="text/javascript" src="js/views/app.views.site.js"></script>
+<script type="text/javascript" src="js/views/app.views.navbar.js"></script>
+<script type="text/javascript" src="js/views/app.views.footer.js"></script>
+<script type="text/javascript" src="js/views/app.views.credits.js"></script>
+<script type="text/javascript" src="js/views/app.views.project.js"></script>
+<script type="text/javascript" src="js/views/app.views.password.js"></script>
+<script type="text/javascript" src="js/views/app.views.dashboard.js"></script>
+<script type="text/javascript" src="js/views/app.views.resend.js"></script>
+<script type="text/javascript" src="js/views/app.views.activate.js"></script>
+<script type="text/javascript" src="js/views/app.views.error.js"></script>
+<script type="text/javascript" src="js/views/app.views.adlarge.js"></script>
+<script type="text/javascript" src="js/views/app.views.admedium.js"></script>
+<script type="text/javascript" src="js/views/app.views.adsmall.js"></script>
 
-    <script type="text/javascript">
-        $(function() {
-            if (checkBrowser()) {
-                if (checkCookie()) {
-                    app.utils.init(true);       /** www startup **/
-                }
-                else    {
-                    $("#content").append("<img src='css/img/logo.png' width='600'/>");
-                    alert("I'm sorry, nodelog requires cookies enabled.")
-                }
+<script type="text/javascript">
+    $(function() {
+        if (checkBrowser()) {
+            if (checkCookie()) {
+                app.utils.init(true);       /** www startup **/
             }
             else    {
                 $("#content").append("<img src='css/img/logo.png' width='600'/>");
-                alert("I'm sorry, nodelog is not compliant with your IE version. Upgrade it or use another browser like Firefox, Chrome or Safari.")
+                alert("I'm sorry, nodelog requires cookies enabled.")
             }
+        }
+        else    {
+            $("#content").append("<img src='css/img/logo.png' width='600'/>");
+            alert("I'm sorry, nodelog is not compliant with your IE version. Upgrade it or use another browser like Firefox, Chrome or Safari.")
+        }
 
-            //check for browser compatibility
-            function checkBrowser() {
-                var ver = -1; // Return value assumes failure.
-                var ret = true;
-                if (navigator.appName == 'Microsoft Internet Explorer')
-                {
-                    var ua = navigator.userAgent;
-                    var re  = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
-                    if (re.exec(ua) != null)
-                        ver = parseFloat( RegExp.$1 );
-                }
-                if ( ver > -1 )     {
-                    if ( ver < 8.0 )
-                        ret = false;
-                }
-                return ret;
+        //check for browser compatibility
+        function checkBrowser() {
+            var ver = -1; // Return value assumes failure.
+            var ret = true;
+            if (navigator.appName == 'Microsoft Internet Explorer')
+            {
+                var ua = navigator.userAgent;
+                var re  = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+                if (re.exec(ua) != null)
+                    ver = parseFloat( RegExp.$1 );
             }
-
-            //check for cookie enabled
-            function checkCookie()  {
-                var cookieEnabled=(navigator.cookieEnabled)? true : false
-                if (typeof navigator.cookieEnabled=="undefined" && !cookieEnabled){
-                    document.cookie="testcookie";
-                    cookieEnabled=(document.cookie.indexOf("testcookie")!=-1)? true : false;
-                }
-                return (cookieEnabled) ? true : false;
+            if ( ver > -1 )     {
+                if ( ver < 8.0 )
+                    ret = false;
             }
+            return ret;
+        }
 
-        });
-    </script>
+        //check for cookie enabled
+        function checkCookie()  {
+            var cookieEnabled=(navigator.cookieEnabled)? true : false
+            if (typeof navigator.cookieEnabled=="undefined" && !cookieEnabled){
+                document.cookie="testcookie";
+                cookieEnabled=(document.cookie.indexOf("testcookie")!=-1)? true : false;
+            }
+            return (cookieEnabled) ? true : false;
+        }
+
+    });
+</script>
 
 </body>
 </html>

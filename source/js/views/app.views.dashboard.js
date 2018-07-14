@@ -85,7 +85,7 @@ app.views.dashboard = Backbone.View.extend({
                     });
 
                     app.global.socket.on('num', function (msg) {
-                        var numRows= that.$('#numRows').val() == "" ? 30 : that.$('#numRows').val();
+                        var numRows= that.$('#numRows').val() == "" ? 10 : that.$('#numRows').val();
                         $("#day").text(msg.day);
                         $("#pageView").hide().text(msg.pageView).fadeIn(1000);
 

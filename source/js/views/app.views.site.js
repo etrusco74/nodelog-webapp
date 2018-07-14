@@ -290,12 +290,16 @@ app.views.site = Backbone.View.extend({
                     $('#website').val(model.get("website"));
                     var str = "<!-- node log -->\n" +
                               "<script type='text/javascript'>\n" +
-                              "nodelog_clientid = '"+model.get("client_id")+"';\n" +
+                              "nodelog_clientid = '" + model.get("client_id") + "';\n" +
                               "</script>\n" +
                               "<script type='text/javascript' src='" + app.const.weburl() + "js/n.js?v=001'></script>\n" +
                               "<!-- end node log -->";
 
                     $('#tracking').val(str);
+                    
+                    str = "<amp-img  src='" + app.const.weburl() + "/api/pixel/" + model.get("client_id") + "'  alt='pixel' layout='responsive' width='1' height='1'></amp-img>\n";
+                    $('#amp').val(str);
+                    
 
                     console.log(model);
                 },
