@@ -1,7 +1,7 @@
 /**
  * Created with JetBrains WebStorm.
  * User: a.demarchi
- * Date: 17/04/13
+ * Date: 17/07/18
  * Time: 14.55
  * To change this template use File | Settings | File Templates.
  */
@@ -45,11 +45,11 @@ app.views.dashboardlink = Backbone.View.extend({
                 $("#day").text(model.get("day"));
                 $("#page").text(model.get("page"));
                 $("#totalClick").text(model.get("totalClick"));
-                $("#totalLink").text(model.get("bestLinks").length);
+                $("#totalLink").text(model.get("totalLinks"));
 
                 var numRows= that.$('#numRows').val() == "" ? 10 : that.$('#numRows').val();
                 $('#bestLinks li').remove();
-                for (index = 0, len = model.get("bestLinks").length; index < numRows; ++index) {
+                for (index = 0, len = model.get("totalLinks"); index < numRows; ++index) {
                     var perc = Math.floor((model.get("bestLinks")[index].total_click / model.get("totalClick")) * 100);
                     var url = "<a href='" + model.get("bestLinks")[index]._id.href + "' target='_blank'>" + model.get("bestLinks")[index]._id.text + "</a> - " + model.get("bestLinks")[index].total_click + " ("+perc+"%)"
 
@@ -259,7 +259,7 @@ app.views.dashboardlink = Backbone.View.extend({
         $(this.el).removeData().unbind();
         this.remove();
         Backbone.View.prototype.remove.call(this);
-        delete app.global.views['dashboard'];
+        delete app.global.views['dashboardlink'];
     }
 
 });

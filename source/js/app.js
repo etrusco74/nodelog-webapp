@@ -111,9 +111,9 @@ app = {
 
         /** app config **/
         const: {
-            //env : 'development',
+            env : 'development',
             //env : 'local',
-            env : 'test',
+            //env : 'test',
             //env : 'production',
             weburl : function() {
                 var url;
