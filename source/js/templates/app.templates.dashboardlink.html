@@ -1,0 +1,68 @@
+<!-- DashboardLink -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6">
+
+            <!-- content best page -->
+            <div class="container-fluid">
+
+                <div class="row">
+                    <h3>connection</h3>
+                    <p>connected to <span id='con' class="text-danger"></span> - day : <span id='day' class="text-danger"></span> - total click : <span id='totalClick' class="text-danger">0</span> - total link : <span id='totalLink' class="text-danger">0</span></p>
+                    <p>page : <span id='page' class="text-danger">0</span><p>
+                </div>
+
+                <div class="row">
+                    <h3>today's best links</h3>
+                    <div class="col-xs-3">
+                        <input type='text' class="form-control" name='numRows' id='numRows' placeholder="how many row?" /><br/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <ol id='bestLinks'></ol>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+            <!-- content chart -->
+            <div class="container-fluid">
+                <div class="row">
+                    <h3>stat</h3>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3">
+                        <input type='text' class="form-control" name='statDay' id='statDay' placeholder='how many day?' />
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="graph"></div>
+                </div>
+                <div class="row">
+                    <div id="graph-page"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <!-- content best page -->
+            <div class="container-fluid">
+                <div class="row">
+                    <h3>realtime log</h3>
+                    <ul id='log' class="list-unstyled"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

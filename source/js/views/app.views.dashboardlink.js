@@ -5,11 +5,11 @@
  * Time: 14.55
  * To change this template use File | Settings | File Templates.
  */
-app.views.dashboard = Backbone.View.extend({
+app.views.dashboardlink = Backbone.View.extend({
 
     /** init view **/
     initialize: function() {
-        console.log('initializing dashboard view');
+        console.log('initializing dashboardlink view');
     },
 
     /** submit event for registration **/
@@ -33,88 +33,32 @@ app.views.dashboard = Backbone.View.extend({
     init_socket: function () {
 
         var that = this;
-
         var i = 1;
-        var tag = '';
-        var client_id = '';
 
         /** get model site **/
-
-        var _siteModel = new app.models.site();
-
-        /** GET SITE MODEL **/
-        _siteModel.fetch({
+        var _statLinkModel = new app.models.statlink();
+        _statLinkModel.fetch({
             success: function (model) {
+                console.log(model);
 
-                if (typeof model.get("_id") !== 'undefined') {
-                    //model.get("_id");
-                    client_id = model.get("client_id");
-                    tag = model.get("tag");
-                    //model.get("website");
-                    console.log(model);
+                $("#con").text(model.get("client_id"));
+                $("#day").text(model.get("day"));
+                $("#page").text(model.get("page"));
+                $("#totalClick").text(model.get("totalClick"));
+                $("#totalLink").text(model.get("bestLinks").length);
 
-                    /** ok site **/
-                    if (app.global.socket === null) {
-                        /** start connection **/
-                        app.global.socket = io.connect(app.const.weburl());
-                    }
-                    else {
-                        location.reload(true);
-                    }
+                var numRows= that.$('#numRows').val() == "" ? 10 : that.$('#numRows').val();
+                $('#bestLinks li').remove();
+                for (index = 0, len = model.get("bestLinks").length; index < numRows; ++index) {
+                    var perc = Math.floor((model.get("bestLinks")[index].total_click / model.get("totalClick")) * 100);
+                    var url = "<a href='" + model.get("bestLinks")[index]._id.href + "' target='_blank'>" + model.get("bestLinks")[index]._id.text + "</a> - " + model.get("bestLinks")[index].total_click + " ("+perc+"%)"
 
-                    app.global.socket.on('connect', function () {
-                        app.global.socket.emit('identify', client_id);
-                        $("#log").prepend('<li><br>Connected to <b>' + tag + '</b></li>');
-                        $("#con").text(tag);
-                        that.stat_renderStatCollection();
-                        that.stat_renderStatPageCollection();
-                    });
-
-                    app.global.socket.on('message', function (msg) {
-
-                        $("#log").prepend('<div id="json-'+i+'"><div id="json-obj"></div>');
-                        $("#log").prepend('<li><span class="glyphicon glyphicon-hand-right"></span><a href="' + msg.location.href + '" target="_blank"> ' + (msg.location.page == '' ? "home" : msg.location.page) + '</a></li>');
-                        $('#log li:first').hide().fadeIn(2000);
-
-                        $('#json-'+i).append($('#json-obj').jsonViewer(msg));
-
-                        that.stat_renderStatCollection();
-                        that.stat_renderStatPageCollection();
-
-                        i++;
-                    });
-
-                    app.global.socket.on('num', function (msg) {
-                        var numRows= that.$('#numRows').val() == "" ? 10 : that.$('#numRows').val();
-                        $("#day").text(msg.day);
-                        $("#pageView").hide().text(msg.pageView).fadeIn(1000);
-
-                        $('#bestPages li').remove();
-                        for (index = 0, len = msg.bestPages.length; index < numRows; ++index) {
-                            var perc = Math.floor((msg.bestPages[index].total_view / msg.pageView) * 100);
-                            var url = "<a href='" + msg.bestPages[index]._id.href + "' target='_blank'>" + (msg.bestPages[index]._id.page == '' ? "home" : msg.bestPages[index]._id.page) + "</a> - " + msg.bestPages[index].total_view + " ("+perc+"%)"
-
-                            var urlLinks= "<a href=#" +  that.language.lang	 + "/dashboardlink/"+msg.client_id+"/page/"+msg.bestPages[index]._id.page+"/day/"+msg.day+" target='_blank'>links</a>";
-
-
-
-                            if (app.global.single_page == msg.bestPages[index]._id.page)
-                                $("#bestPages").append('<li><input type="radio" name="pageradio" checked value="'+msg.bestPages[index]._id.page+'"></radio> ' + url + ' - '+ urlLinks + '</li>');
-                            else
-                                $("#bestPages").append('<li><input type="radio" name="pageradio" value="'+msg.bestPages[index]._id.page+'"></radio> ' + url + ' - '+ urlLinks + '</li>');
-                        }
-
-                        var ua = $("#uniqueAccess").text();
-                        if (ua != msg.uniqueAccess) $("#uniqueAccess").hide().text(msg.uniqueAccess).fadeIn(1000);
-
-                        $("#totalPage").hide().text(msg.totalPage).fadeIn(1000);
-                    });
-
+                    if (app.global.single_page == model.get("bestLinks")[index]._id.page)
+                        $("#bestLinks").append('<li><input type="radio" name="pageradio" checked value="'+model.get("bestLinks")[index]._id.page+'"></radio> ' + url + '</li>');
+                    else
+                        $("#bestLinks").append('<li><input type="radio" name="pageradio" value="'+model.get("bestLinks")[index]._id.page+'"></radio> ' + url + '</li>');
                 }
-                else {
-                    if (!model.get("success"))
-                        app.routers.router.prototype.logout();
-                }
+
             },
             error: function(response){
                 bootbox.dialog({
@@ -132,10 +76,9 @@ app.views.dashboard = Backbone.View.extend({
                 });
                 console.log(response);
             },
-            url: app.const.apiurl() + 'site/client_id/' + app.global.client_id,
+            url: app.const.apiurl() + 'statlinks/' + this.options.client_id + '/page/' + this.options.page + '/day/' + this.options.day,
             private: true
         });
-
         /** end init socket.io **/
     },
 

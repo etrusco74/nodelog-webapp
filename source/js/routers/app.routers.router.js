@@ -15,7 +15,8 @@ app.routers.router = Backbone.Router.extend({
         ':lang/registration':       'registration',
         ':lang/profile':            'profile',
         ':lang/password':           'password',
-        ':lang/dashboard/:client_id':          'dashboard',
+        ':lang/dashboard/:client_id':                                   'dashboard',
+        ':lang/dashboardlink/:client_id/page/:page/day/:day':           'dashboardlink',
         ':lang/welcome':            'welcome',
         ':lang/site':               'site',
         ':lang/site/id/:id':        'site',
@@ -261,6 +262,31 @@ app.routers.router = Backbone.Router.extend({
             this.footerContent();
 
             this.navigate('#!' + lang + '/dashboard/' + client_id, { trigger : false });
+        }
+    },
+    /** private function **/
+    dashboardlink: function(lang, client_id, page, day) {
+
+        /** load data from localstorage service **/
+        app.utils.loadTokens();
+        var lang = app.utils.getLanguage();
+
+        if (app.global.tokensCollection.length == 0) {
+            this.index();
+        }
+        else {
+
+            app.global.client_id = client_id;
+            /** render navbar view **/
+            this.navBarContent();
+            /** render dashboardlink view **/
+            app.global.views['dashboardlink'] = new app.views.dashboardlink({client_id: client_id, page: page, day: day});
+            app.global.views['dashboardlink'].render();
+            $('#content').html(app.global.views['dashboardlink'].el);
+            /** render footer view **/
+            this.footerContent();
+
+            this.navigate('#!' + lang + '/dashboardlink/' + client_id + '/page/' + page + '/day/' + day, { trigger : false });
         }
     },
     /** public function **/

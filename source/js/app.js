@@ -113,8 +113,8 @@ app = {
         const: {
             //env : 'development',
             //env : 'local',
-            //env : 'test',
-            env : 'production',
+            env : 'test',
+            //env : 'production',
             weburl : function() {
                 var url;
                 switch(this.env) {
@@ -158,6 +158,6 @@ app = {
         /** languages **/
         languages: ["en", "it"],
 
-        views_array : ['index', 'login', 'registration', 'profile', 'welcome', 'footer', 'navbar', 'site', 'credits', 'dashboard', 'project', 'password', 'resend', 'activate', 'error', 'adlarge', 'admedium', 'adsmall']
+        views_array : ['index', 'login', 'registration', 'profile', 'welcome', 'footer', 'navbar', 'site', 'credits', 'dashboard', 'dashboardlink', 'project', 'password', 'resend', 'activate', 'error', 'adlarge', 'admedium', 'adsmall']
 
 };
