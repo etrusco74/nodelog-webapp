@@ -35,7 +35,44 @@ app.views.dashboardlink = Backbone.View.extend({
         var that = this;
         var i = 1;
 
+        /** ok site **/
+        if (app.global.socket === null) {
+            /** start connection **/
+            app.global.socket = io.connect(app.const.weburl());
+        }
+        else {
+            location.reload(true);
+        }
+
+        app.global.socket.on('connect', function () {
+            app.global.socket.emit('identifylink', that.options.client_id, that.options.page);
+        });
+
+        app.global.socket.on('link', function (msg) {
+            console.log(msg);
+
+            $("#con").text(msg.client_id);
+            $("#day").text(msg.day);
+            $("#page").text(msg.page);
+            $("#totalClick").text(msg.totalClick);
+            $("#totalLink").text(msg.totalLinks);
+
+            var numRows= that.$('#numRows').val() == "" ? 10 : that.$('#numRows').val();
+            $('#bestLinks li').remove();
+            for (index = 0, len = msg.totalLinks; index < numRows; ++index) {
+                var perc = Math.floor((msg.bestLinks[index].total_click / msg.totalClick) * 100);
+                var url = "<a href='" + msg.bestLinks[index]._id.href + "' target='_blank'>" + msg.bestLinks[index]._id.text + "</a> - " + msg.bestLinks[index].total_click + " ("+perc+"%)"
+
+                if (app.global.single_page == msg.bestLinks[index]._id.page)
+                    $("#bestLinks").append('<li><input type="radio" name="pageradio" checked value="'+msg.bestLinks[index]._id.page+'"></radio> ' + url + '</li>');
+                else
+                    $("#bestLinks").append('<li><input type="radio" name="pageradio" value="'+msg.bestLinks[index]._id.page+'"></radio> ' + url + '</li>');
+            }
+
+        });
+
         /** get model site **/
+        /*
         var _statLinkModel = new app.models.statlink();
         _statLinkModel.fetch({
             success: function (model) {
@@ -79,6 +116,8 @@ app.views.dashboardlink = Backbone.View.extend({
             url: app.const.apiurl() + 'statlinks/' + this.options.client_id + '/page/' + this.options.page + '/day/' + this.options.day,
             private: true
         });
+        */
+
         /** end init socket.io **/
     },
 

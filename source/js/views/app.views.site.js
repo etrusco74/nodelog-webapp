@@ -299,7 +299,28 @@ app.views.site = Backbone.View.extend({
                     
                     str = "<amp-img  src='" + app.const.weburl() + "/api/pixel/" + model.get("client_id") + "'  alt='pixel' layout='responsive' width='1' height='1'></amp-img>\n";
                     $('#amp').val(str);
-                    
+
+
+                    str="<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>" +
+                                "<script type='text/javascript'>" +
+                                "function __init() {" +
+                                "    var elements = document.getElementsByTagName('a');" +
+                                "    for (var i = 0, len = elements.length; i < len; i++) {" +
+                                "        elements[i].addEventListener('click', __check);" +
+                                "    }" +
+                                "}" +
+                                "function __check() {" +
+                                "var jsonObj = {};" +
+                                "    jsonObj.uri = event.target.attributes.href.baseURI;" +
+                                "    jsonObj.href = event.target.href;" +
+                                "    jsonObj.text = event.target.text;" +
+                                "    jsonObj.x = event.layerX;" +
+                                "    jsonObj.y = event.layerY;" +
+                                "    $.post('https:///nodelogapp.herokuapp.com/api/link/" + model.get("client_id") + "', jsonObj );" +
+                                "}" +
+                                "__init();" +
+                                "</script>";
+                    $('#statlink').val(str);
 
                     console.log(model);
                 },
