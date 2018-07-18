@@ -316,7 +316,7 @@ app.views.site = Backbone.View.extend({
                                 "    jsonObj.text = event.target.text;" +
                                 "    jsonObj.x = event.layerX;" +
                                 "    jsonObj.y = event.layerY;" +
-                                "    $.post('https:///nodelogapp.herokuapp.com/api/link/" + model.get("client_id") + "', jsonObj );" +
+                                "    $.ajax({method: 'POST', url: 'https:///nodelogapp.herokuapp.com/api/link/" + model.get("client_id") + "', data: jsonObj});" +
                                 "}" +
                                 "__init();" +
                                 "</script>";
