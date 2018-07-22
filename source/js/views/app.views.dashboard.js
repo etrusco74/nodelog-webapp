@@ -94,7 +94,7 @@ app.views.dashboard = Backbone.View.extend({
                             var perc = Math.floor((msg.bestPages[index].total_view / msg.pageView) * 100);
                             var url = "<a href='" + msg.bestPages[index]._id.href + "' target='_blank'>" + (msg.bestPages[index]._id.page == '' ? "home" : msg.bestPages[index]._id.page) + "</a> - " + msg.bestPages[index].total_view + " ("+perc+"%)"
 
-                            var urlLinks= "<a href=#" +  that.language.lang	 + "/dashboardlink/"+msg.client_id+"/page/"+msg.bestPages[index]._id.page+"/day/"+msg.day+" target='_blank'>links</a>";
+                            var urlLinks= "<a href=#" +  that.language.lang	 + "/dashboardlink/"+msg.client_id+"/page/"+msg.bestPages[index]._id.page+" target='_blank'>links</a>";
 
 
 

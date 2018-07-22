@@ -113,7 +113,7 @@ app.views.dashboardlink = Backbone.View.extend({
                 });
                 console.log(response);
             },
-            url: app.const.apiurl() + 'statlinks/' + this.options.client_id + '/page/' + this.options.page + '/day/' + this.options.day,
+            url: app.const.apiurl() + 'statlinks/' + this.options.client_id + '/page/' + this.options.page,
             private: true
         });
         */

@@ -15,8 +15,8 @@ app.routers.router = Backbone.Router.extend({
         ':lang/registration':       'registration',
         ':lang/profile':            'profile',
         ':lang/password':           'password',
-        ':lang/dashboard/:client_id':                                   'dashboard',
-        ':lang/dashboardlink/:client_id/page/:page/day/:day':           'dashboardlink',
+        ':lang/dashboard/:client_id':                           'dashboard',
+        ':lang/dashboardlink/:client_id/page/:page':            'dashboardlink',
         ':lang/welcome':            'welcome',
         ':lang/site':               'site',
         ':lang/site/id/:id':        'site',
@@ -265,7 +265,7 @@ app.routers.router = Backbone.Router.extend({
         }
     },
     /** private function **/
-    dashboardlink: function(lang, client_id, page, day) {
+    dashboardlink: function(lang, client_id, page) {
 
         /** load data from localstorage service **/
         app.utils.loadTokens();
@@ -280,13 +280,13 @@ app.routers.router = Backbone.Router.extend({
             /** render navbar view **/
             this.navBarContent();
             /** render dashboardlink view **/
-            app.global.views['dashboardlink'] = new app.views.dashboardlink({client_id: client_id, page: page, day: day});
+            app.global.views['dashboardlink'] = new app.views.dashboardlink({client_id: client_id, page: page});
             app.global.views['dashboardlink'].render();
             $('#content').html(app.global.views['dashboardlink'].el);
             /** render footer view **/
             this.footerContent();
 
-            this.navigate('#!' + lang + '/dashboardlink/' + client_id + '/page/' + page + '/day/' + day, { trigger : false });
+            this.navigate('#!' + lang + '/dashboardlink/' + client_id + '/page/' + page, { trigger : false });
         }
     },
     /** public function **/
