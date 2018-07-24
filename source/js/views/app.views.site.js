@@ -269,6 +269,7 @@ app.views.site = Backbone.View.extend({
 
         jsonObj.tag = $('#tag').val();
         jsonObj.website = $('#website').val();
+        jsonObj.user = app.global.tokensCollection.at(0).get("_id");
 
         return jsonObj;
     },
@@ -390,7 +391,7 @@ app.views.site = Backbone.View.extend({
                     }
                 });
             },
-            url: app.const.apiurl() + "sites/username/" + app.global.tokensCollection.at(0).get("username"),
+            url: app.const.apiurl() + "sites/userid/" + app.global.tokensCollection.at(0).get("_id"),
             private: true
         });
 
