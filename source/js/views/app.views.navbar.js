@@ -78,7 +78,7 @@ app.views.navbar = Backbone.View.extend({
                     }
                 });
             },
-            url: app.const.apiurl() + "sites/username/" + app.global.tokensCollection.at(0).get("username"),
+            url: app.const.apiurl() + "sites/userid/" + app.global.tokensCollection.at(0).get("_id"),
             private: true
         });
 
