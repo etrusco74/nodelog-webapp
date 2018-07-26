@@ -2,33 +2,29 @@
     "type": "site",
     "lang" : "it",
     "form_messages" : {
-        "geocomplete_site": "Campo obbligatorio",
-        "siteTypes": "Campo obbligatorio",
-        "description": "Campo obbligatorio",
-        "contact_email":{
-            "email": "Inserisci una email valida"
-        },
+        "tag": "Campo obbligatorio",
         "website": {
+            "required": "Campo obbligatorio",
             "url": "Inserisci un url valido"
         }
     },
     "tag_desc" : "descrivi bene la tua segnalazione nel campo <b>note</b> così da generare dei <b>tag</b> e rendere la tua segnalazione facilmente <b>rintracciabile</b>",
     "no_site_desc" : "non hai inserito ancora nessuna segnalazione",
 
-    "header_confirm_ins_message" : "Confermi di voler inserire la seguente segnalazione?",
-    "body_confirm_ins_message" : "Confermi di voler inserire la seguente segnalazione?",
+    "header_confirm_ins_message" : "Confermi di voler inserire il seguente website?",
+    "body_confirm_ins_message" : "Confermi di voler inserire il seguente website?",
 
-    "header_success_ins_message" : "Segnalazione inserita con successo.",
-    "body_success_ins_message" : "Segnalazione inserita con successo. Ti ricordiamo che puoi spostare l'icona manualmente per effettuare una selezione più fine della posizione sulla mappa.",
+    "header_success_ins_message" : "website inserito con successo.",
+    "body_success_ins_message" : "website inserito con successo. Ti ricordiamo che puoi copiare ed incollare i codici per iniziare a monitorare gli accessi in tempo reale.",
 
-    "header_confirm_del_message" : "Confermi di voler cancellare la segnalazione?",
-    "body_confirm_del_message" : "Confermi di voler cancellare la segnalazione? Attenzione, l'operazione sarà irreversibile!",
+    "header_confirm_del_message" : "Confermi di voler cancellare il website?",
+    "body_confirm_del_message" : "Confermi di voler cancellare il website? Attenzione, l'operazione sarà irreversibile!",
 
-    "header_success_del_message" : "Segnalazione cancellata con successo",
-    "body_success_del_message" : "La tua segnalazione è stata cancellata con successo",
+    "header_success_del_message" : "website cancellato con successo",
+    "body_success_del_message" : "Il tuo website è stata cancellato con successo",
 
     "delete_header_error_message" : "Ops!",
-    "delete_body_error_message" : "Selezionare prima una segnalazione da cancellare",
+    "delete_body_error_message" : "Selezionare prima un website da cancellare",
 
     "confirm_button" : "conferma",
     "cancel_button" : "annulla",

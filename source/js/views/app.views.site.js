@@ -31,13 +31,9 @@ app.views.site = Backbone.View.extend({
         /** validate form **/
         this.$("#siteForm").validate({
             rules: {
-                geocomplete_site: "required",
-                siteTypes: "required",
-                description: "required",
-                contact_email:{
-                    email: true
-                },
+                tag: "required",
                 website: {
+                    required: true,
                     url: true
                 }
             },
@@ -286,19 +282,18 @@ app.views.site = Backbone.View.extend({
                 success: function (model) {
 
                     $('#_id').val(model.get("_id"));
-                    $('#client_id').val(model.get("client_id"));
                     $('#tag').val(model.get("tag"));
                     $('#website').val(model.get("website"));
                     var str = "<!-- node log -->\n" +
                               "<script type='text/javascript'>\n" +
-                              "nodelog_clientid = '" + model.get("client_id") + "';\n" +
+                              "nodelog_clientid = '" + model.get("_id") + "';\n" +
                               "</script>\n" +
                               "<script type='text/javascript' src='" + app.const.weburl() + "js/n.js?v=001'></script>\n" +
                               "<!-- end node log -->";
 
                     $('#tracking').val(str);
                     
-                    str = "<amp-img  src='" + app.const.weburl() + "/api/pixel/" + model.get("client_id") + "'  alt='pixel' layout='responsive' width='1' height='1'></amp-img>\n";
+                    str = "<amp-img  src='" + app.const.weburl() + "/api/pixel/" + model.get("_id") + "'  alt='pixel' layout='responsive' width='1' height='1'></amp-img>\n";
                     $('#amp').val(str);
 
 
@@ -317,7 +312,7 @@ app.views.site = Backbone.View.extend({
                                 "    jsonObj.text = event.target.text;" +
                                 "    jsonObj.x = event.layerX;" +
                                 "    jsonObj.y = event.layerY;" +
-                                "    $.ajax({method: 'POST', url: 'https:///nodelogapp.herokuapp.com/api/link/" + model.get("client_id") + "', data: jsonObj});" +
+                                "    $.ajax({method: 'POST', url: 'https:///nodelogapp.herokuapp.com/api/link/" + model.get("_id") + "', data: jsonObj});" +
                                 "}" +
                                 "__init();" +
                                 "</script>";
@@ -348,10 +343,11 @@ app.views.site = Backbone.View.extend({
         else {
 
             $('#_id').val('');
-            $('#client_id').val('');
             $('#tag').val('');
             $('#website').val('');
             $('#tracking').val('');
+            $('#amp').val('');
+            $('#statlink').val('');
         }
     },
 
