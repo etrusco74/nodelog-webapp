@@ -299,7 +299,7 @@ app.views.site = Backbone.View.extend({
 
                     str="<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>" +
                                 "<script type='text/javascript'>" +
-                                "function __init() {" +
+                                "function __initlink() {" +
                                 "    var elements = document.getElementsByTagName('a');" +
                                 "    for (var i = 0, len = elements.length; i < len; i++) {" +
                                 "        elements[i].addEventListener('click', __check);" +
@@ -314,7 +314,7 @@ app.views.site = Backbone.View.extend({
                                 "    jsonObj.y = event.layerY;" +
                                 "    $.ajax({method: 'POST', url: 'https:///nodelogapp.herokuapp.com/api/link/" + model.get("_id") + "', data: jsonObj});" +
                                 "}" +
-                                "__init();" +
+                                "__initlink();" +
                                 "</script>";
                     $('#statlink').val(str);
 
