@@ -59,7 +59,7 @@ app.views.dashboardlink = Backbone.View.extend({
 
             var numRows= that.$('#numRows').val() == "" ? 10 : that.$('#numRows').val();
             $('#bestLinks li').remove();
-            for (index = 0, len = msg.totalLinks; index < numRows; ++index) {
+            for (index = 0, len = msg.totalLinks; (index < numRows && index < len); ++index) {
                 var perc = Math.floor((msg.bestLinks[index].total_click / msg.totalClick) * 100);
                 var url = "<a href='" + msg.bestLinks[index]._id.href + "' target='_blank'>" + msg.bestLinks[index]._id.text + "</a> - " + msg.bestLinks[index].total_click + " ("+perc+"%)"
 

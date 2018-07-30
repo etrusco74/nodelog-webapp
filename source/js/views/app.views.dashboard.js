@@ -90,7 +90,7 @@ app.views.dashboard = Backbone.View.extend({
                         $("#pageView").hide().text(msg.pageView).fadeIn(1000);
 
                         $('#bestPages li').remove();
-                        for (index = 0, len = msg.bestPages.length; index < numRows; ++index) {
+                        for (index = 0, len = msg.bestPages.length; (index < numRows && index < len ); ++index) {
                             var perc = Math.floor((msg.bestPages[index].total_view / msg.pageView) * 100);
                             var url = "<a href='" + msg.bestPages[index]._id.href + "' target='_blank'>" + (msg.bestPages[index]._id.page == '' ? "home" : msg.bestPages[index]._id.page) + "</a> - " + msg.bestPages[index].total_view + " ("+perc+"%)"
 
