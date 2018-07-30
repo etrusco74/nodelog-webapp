@@ -307,7 +307,7 @@ app.views.site = Backbone.View.extend({
                                 "}" +
                                 "function __check() {" +
                                 "var jsonObj = {};" +
-                                "    jsonObj.uri = event.target.attributes.href.baseURI;" +
+                                "    jsonObj.uri = event.target.baseURI;" +
                                 "    jsonObj.href = event.target.href;" +
                                 "    jsonObj.text = event.target.text;" +
                                 "    jsonObj.x = event.layerX;" +
